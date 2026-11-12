@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\StaffFile\\\\applications.php\")",
+      "PowerShell(\\(Get-Content \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\AdminFile\\\\script.js\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(try { $v = & node --version 2>$null; \"node: $v\" } catch { \"no node\" })",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\AdminFile\\\\index.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\StaffFile\\\\review_application.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\StaffFile\\\\process_review_application.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\AdminFile\\\\requests.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/database.php'; echo 'OK - payments table ready';\")",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"DESCRIBE payments;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\AdminFile\\\\Manage_adopters_file\\\\manage_adopters.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"SELECT application_id, full_name, application_status, pet_id FROM adoption_applications;\")"
+    ]
+  }
+}

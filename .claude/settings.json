@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/database.php'; `$pdo->prepare\\('INSERT INTO payments \\(application_id, adopter_id, pet_id, amount, status, method, xendit_request_id, checkout_url, recorded_by\\) VALUES \\(2,1,3,500.00,?,?,?,?,1\\)'\\)->execute\\(['Pending','Xendit GCash','pr-2e8ebceb-048c-45e2-90dd-6abd96ca27bf','https://example.test/x']\\); echo 'Temp Pending row inserted' . PHP_EOL;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"SELECT payment_id, application_id, status, xendit_request_id FROM payments;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/database.php'; `$pdo->exec\\(\\\\\"DELETE FROM payments WHERE payment_id = 5\\\\\"\\); echo 'Temp row removed' . PHP_EOL;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"SELECT payment_id, application_id, amount, status, method, reference_number FROM payments;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/xendit_config.php'; `$r = xendit_request\\('POST','/v3/payment_requests',['reference_id'=>'qr-'.time\\(\\),'type'=>'PAY','country'=>'PH','currency'=>'PHP','request_amount'=>500,'capture_method'=>'AUTOMATIC','channel_code'=>'QRPH','description'=>'Adoption fee QR test']\\); echo 'HTTP: '.`$r['status'].PHP_EOL; echo 'OK: '.\\(`$r['ok']?'YES':'NO'\\).PHP_EOL; if\\(!`$r['ok']\\){ echo 'ERR: '.`$r['error'].PHP_EOL; } else { echo 'ID: '.\\(`$r['data']['payment_request_id']??'?'\\).PHP_EOL; echo 'STATUS: '.\\(`$r['data']['status']??'?'\\).PHP_EOL; echo 'ACTIONS: '.PHP_EOL; print_r\\(`$r['data']['actions']??'none'\\); }\" 2>&1)",
+      "WebFetch(domain:cdnjs.cloudflare.com)",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\Adopter_File\\\\payments.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\Adopter_File\\\\process_pay_now.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/database.php'; require 'c:/xamp/htdocs/Caps2/connection/xendit_config.php'; `$r = xendit_create_payment_request\\('qrflow-'.time\\(\\), 500.00, 'QR flow test', XENDIT_BASE_URL.'/Adopter_File/payments.php?xendit=success', XENDIT_BASE_URL.'/Adopter_File/payments.php?xendit=failed'\\); if\\(!`$r['ok']\\){ echo 'FAILED: '.`$r['error']; exit; } `$url = xendit_extract_checkout_url\\(`$r['data']\\); `$id = `$r['data']['payment_request_id']; `$pdo->prepare\\('INSERT INTO payments \\(application_id, adopter_id, pet_id, amount, status, method, xendit_request_id, checkout_url, recorded_by\\) VALUES \\(2,1,3,500.00,?,?,?,?,1\\)'\\)->execute\\(['Pending','Xendit GCash',`$id,`$url]\\); echo 'Test pending payment id: ' . `$pdo->lastInsertId\\(\\) . PHP_EOL; echo 'Checkout URL: ' . `$url . PHP_EOL;\" 2>&1)",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"DELETE FROM payments WHERE payment_id = 6; SELECT payment_id, application_id, amount, status, method, reference_number FROM payments;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\Adopter_File\\\\check_payment_status.php\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/database.php'; require 'c:/xamp/htdocs/Caps2/connection/xendit_config.php'; `$r = xendit_create_payment_request\\('timertest-'.time\\(\\), 500.00, 'QR timer test', XENDIT_BASE_URL.'/Adopter_File/payments.php?xendit=success', XENDIT_BASE_URL.'/Adopter_File/payments.php?xendit=failed'\\); `$url = xendit_extract_checkout_url\\(`$r['data']\\); `$pdo->prepare\\('INSERT INTO payments \\(application_id, adopter_id, pet_id, amount, status, method, xendit_request_id, checkout_url, recorded_by\\) VALUES \\(2,1,3,500.00,?,?,?,?,1\\)'\\)->execute\\(['Pending','Xendit GCash',`$r['data']['payment_request_id'],`$url]\\); echo 'Test payment id: '.`$pdo->lastInsertId\\(\\).PHP_EOL;\" 2>&1)",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"DELETE FROM payments WHERE payment_id IN \\(7,8\\); SELECT payment_id, application_id, amount, status, method, reference_number FROM payments;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" -r \"require 'c:/xamp/htdocs/Caps2/connection/database.php'; echo 'Migration OK' . PHP_EOL;\")",
+      "PowerShell(& \"c:\\\\xamp\\\\mysql\\\\bin\\\\mysql.exe\" -u root a_smart_pet -e \"SHOW COLUMNS FROM pet_inventory LIKE 'shedding_level';\")",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\_scoring_test.php\" 2>&1)",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\_match_check.php\" 2>&1)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\_rec_test.php\" 2>&1)",
+      "PowerShell(& \"c:\\\\xamp\\\\php\\\\php.exe\" \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\_cost_est.php\" 2>&1)",
+      "PowerShell($f='c:\\\\xamp\\\\htdocs\\\\Caps2\\\\StaffFile\\\\review_application.php'; $b=[System.IO.File]::ReadAllBytes\\($f\\); $s=[System.Text.Encoding]::ASCII.GetString\\($b\\); $i=$s.IndexOf\\('aria-label=\"Close\"'\\); \\($b[\\($i+18\\)..\\($i+30\\)] | ForEach-Object { '{0:X2}' -f $_ }\\) -join ' ')",
+      "PowerShell($f='c:\\\\xamp\\\\htdocs\\\\Caps2\\\\Adopter_File\\\\adoption_application.php'; $b=[System.IO.File]::ReadAllBytes\\($f\\); $s=[System.Text.Encoding]::ASCII.GetString\\($b\\); $i=$s.IndexOf\\('btn-back\">'\\); \\($b[\\($i+10\\)..\\($i+22\\)] | ForEach-Object { '{0:X2}' -f $_ }\\) -join ' ')",
+      "PowerShell(php -l \"c:\\\\xamp\\\\htdocs\\\\Caps2\\\\StaffFile\\\\review_application.php\")",
+      "WebFetch(domain:ai.google.dev)",
+      "PowerShell(& 'C:\\\\xamp\\\\php\\\\php.exe' 'C:\\\\Users\\\\Abby\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xamp-htdocs-Caps2\\\\20c0f980-7b8e-400a-a128-cdccf9e6949a\\\\scratchpad\\\\final.php')",
+      "PowerShell(& 'C:\\\\xamp\\\\php\\\\php.exe' 'c:\\\\xamp\\\\htdocs\\\\Caps2\\\\_langtest.php')",
+      "PowerShell(& 'C:\\\\xamp\\\\php\\\\php.exe' 'c:\\\\xamp\\\\htdocs\\\\Caps2\\\\_vet1.php')",
+      "PowerShell(& 'C:\\\\xamp\\\\php\\\\php.exe' -l 'c:\\\\xamp\\\\htdocs\\\\Caps2\\\\connection\\\\chatbot_api.php')",
+      "PowerShell(& 'C:\\\\xamp\\\\php\\\\php.exe' -l 'c:\\\\xamp\\\\htdocs\\\\Caps2\\\\connection\\\\chat_bubble.php')"
+    ]
+  }
+}

@@ -1,0 +1,2896 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+/* ================= PAGE ENTRANCE ANIMATION ================= */
+@keyframes fadeUpIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-title { animation: fadeUpIn 0.5s ease-out both; }
+
+.stats-grid > * { animation: fadeUpIn 0.5s ease-out both; }
+.stats-grid > *:nth-child(1) { animation-delay: 0.08s; }
+.stats-grid > *:nth-child(2) { animation-delay: 0.18s; }
+.stats-grid > *:nth-child(3) { animation-delay: 0.28s; }
+
+.pets-grid > * { animation: fadeUpIn 0.45s ease-out both; }
+.pets-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.pets-grid > *:nth-child(2) { animation-delay: 0.16s; }
+.pets-grid > *:nth-child(3) { animation-delay: 0.22s; }
+.pets-grid > *:nth-child(4) { animation-delay: 0.28s; }
+.pets-grid > *:nth-child(5) { animation-delay: 0.34s; }
+.pets-grid > *:nth-child(6) { animation-delay: 0.4s; }
+.pets-grid > *:nth-child(7) { animation-delay: 0.46s; }
+.pets-grid > *:nth-child(n+8) { animation-delay: 0.52s; }
+
+.preferences-form-container,
+.pet-detail-card,
+.highlight-banner { animation: fadeUpIn 0.5s ease-out both; }
+
+.shelter-grid > * { animation: fadeUpIn 0.5s ease-out both; }
+.shelter-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.shelter-grid > *:nth-child(2) { animation-delay: 0.22s; }
+
+.dashboard-container {
+    display: flex;
+    height: 100vh; 
+    overflow: hidden;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+   width: 250px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 15px 0px 15px;
+    border-radius: 0px 50px 0px 0px;
+    flex-shrink: 0; /* Para hindi mapipiga/mamimilipit ang sidebar */
+    overflow: visible;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.logo-circle {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 50%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    padding: 2px;
+    border: 1px solid green;
+    overflow: hidden;
+}
+
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+
+.brand h2 {
+    font-size: 20px;
+    color: #1b4d2e;
+}
+
+.brand h2 span {
+    color: #e67e22;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    color: #4f4f4f;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 12px;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+/* Bilang ng unread message sa Messages nav item - kahit hindi pa binuksan
+   ang page, makikita agad kung may bagong chat. Nawawala pagkatapos mabasa. */
+.sp-unread-badge {
+    margin-left: auto;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 3px 7px;
+    border-radius: 999px;
+    min-width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.nav-item i {
+    width: 20px;
+}
+
+.nav-item.active {
+    background-color: #2e5b32;
+    color: #ffffff;
+}
+
+.nav-item:hover:not(.active) {
+    background-color: #f0f0f0;
+    transform: translateX(3px);
+}
+
+.nav-item.logout {
+    margin-top: 15px;
+    color: #2e5b32;
+}
+
+/* Larawan sa ibaba ng sidebar: sakto sa buong lapad (gilid hanggang gilid).
+   May maputing liwanag sa kaliwa't kanang gilid ang mismong larawan
+   (Images/bg_design_pets.png), kaya bahagya itong pinalalaki sa loob ng
+   lalagyan para matakpan iyon - wala nang puwang sa magkabilang gilid. */
+/* Pinupuno ng larawan ang LAHAT ng bakanteng espasyo sa ilalim ng menu
+   (wala na ang Logout), hanggang sa ibaba ng sidebar */
+.sidebar-illustration {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 16px -15px 0;          /* abot hanggang gilid ng sidebar (padding na 15px) */
+    line-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    border-radius: 0 0 0 50px;
+}
+
+.sidebar-illustration img {
+    width: 122%;                   /* natatakpan ang kumikinang na gilid ng larawan */
+    max-width: none;
+    height: 100%;
+    flex-shrink: 0;
+    object-fit: cover;
+    object-position: center bottom; /* laging buo ang aso, pusa at bahay sa ibaba */
+    display: block;
+    /* Malambot na simula sa itaas, para walang matigas na guhit */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 40px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 40px);
+}
+
+/* ================= MAIN CONTENT ================= */
+.main-content {
+flex: 1;
+    height: 100vh;
+    overflow-y: auto; /* Dito lang papayagan ang scroll kapag humaba ang content */
+    scrollbar-width: none;     /* walang nakikitang scrollbar sa gilid (nag-i-scroll pa rin) */
+    --mc-pad: 30px;            /* puwang sa gilid; ginagamit din ng topnav para sumakop sa buong lapad */
+    padding: 0 var(--mc-pad) 20px var(--mc-pad);
+    background-color: #ffffff;
+    margin-left: 10px;
+    border-radius: 40px 0 0 20px;
+}
+.main-content::-webkit-scrollbar { display: none; }
+
+/* Walang scrollbar din sa buong page (hal. kapag ang buong page ang nag-i-scroll
+   sa maliit na screen) - nag-i-scroll pa rin gamit ang mouse wheel/touch */
+html, body { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+/* TOP NAVBAR: sumasakop sa buong lapad ng main content (hindi nakalutang na kahon),
+   bilog lang ang kaliwang itaas na kanto */
+.top-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 calc(-1 * var(--mc-pad, 30px)) 25px;
+    padding: 16px var(--mc-pad, 30px) 14px;
+    border-bottom: 1px solid #eef0f2;
+    border-radius: 40px 0 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+}
+
+.top-nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.top-nav-links a {
+    text-decoration: none;
+    color: #222;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.top-nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #2e5b32;
+    transition: width 0.3s ease;
+}
+
+.top-nav-links a:hover {
+    color: #2e5b32;
+}
+
+.top-nav-links a:hover::after {
+    width: 100%;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+}
+
+/* HERO TITLE */
+.hero-title p {
+    font-style: italic;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 25px;
+    font-family: 'Georgia', serif;
+}
+
+/* ============ PAYMENT REMINDER BANNER ============ */
+/* Kapansin-pansin dapat ito - ito ang unang makikita ng adopter kapag may babayaran siya */
+.payment-alert {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: linear-gradient(135deg, #fff8e6, #ffefc7);
+    border: 1px solid #f0d38a;
+    border-left: 6px solid #f59c23;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 26px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    flex-wrap: wrap;
+    animation: fadeUpIn 0.5s ease-out both;
+}
+
+.payment-alert-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #f59c23;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.payment-alert-body { flex: 1; min-width: 220px; }
+
+.payment-alert-body h3 {
+    margin: 0 0 4px 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #8a5a00;
+}
+
+.payment-alert-body p {
+    margin: 0;
+    font-size: 14px;
+    color: #7a6231;
+}
+
+.payment-alert-btn {
+    background: #0070e0;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: background 0.14s ease, transform 0.14s ease;
+}
+
+.payment-alert-btn:hover {
+    background: #005bb8;
+    transform: translateY(-1px);
+}
+
+/* Fee reminder sa loob ng application card (My Applications page) */
+.fee-note {
+    font-size: 12.5px;
+    font-weight: 700;
+    margin: 8px 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fee-note.due { color: #b25900; }
+.fee-note.paid { color: #1e7e34; }
+
+.btn-pay-small {
+    background: #0070e0;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 12.5px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.14s ease;
+}
+.btn-pay-small:hover { background: #005bb8; }
+
+/* ================= STATS GRID ================= */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* EKS AKTONG PANTAY ANG LAPAD NG 3 CARDS */
+    gap: 20px;
+    margin-bottom: 30px;
+    align-items: stretch;
+}
+
+/* Responsive stats grid for smaller screens */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Stat Card 1: Available Pets (Responsive Custom Wavy Top Shape) */
+.yellow-card {
+    background-color: #fceecb;
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    clip-path: url(#wavy-card-clip); /* Gagamitin ang SVG clip-path na auto-stretch */
+    filter: drop-shadow(0 3px 5px rgba(27, 77, 46, 0.05));
+    border-radius: 0 0 15px 15px; /* Rounded corners for the bottom */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated Wave SVG at bottom */
+.yellow-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C150,0 350,120 600,60 C850,0 1050,120 1200,60 L1200,120 L0,120 Z' fill='%231b4d2e' fill-opacity='0.3'/%3E%3C/svg%3E");
+    background-size: 50% 100%;
+    animation: wave-move 3s linear infinite;
+}
+
+@keyframes wave-move {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.yellow-card .stat-number {
+    font-size: 52px;
+    font-weight: 800;
+    color: #1b4d2e;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+.yellow-card .stat-label {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1b4d2e;
+    margin-top: 10px;
+    line-height: 1.15;
+}
+
+/* Stat Card 2: Graph */
+.graph-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.toggle-pills {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.toggle-pills .pill {
+    padding: 4px 12px;
+    font-size: 11px;
+    border-radius: 15px;
+    color: #666;
+}
+
+.toggle-pills .pill.active {
+    background: #f39c12;
+    color: #fff;
+}
+
+.graph-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 15px;
+}
+
+.big-num {
+    font-size: 52px;
+    font-weight: 800;
+    display: block;
+    color: #1b4d2e;
+    line-height: 1;
+}
+
+.badge {
+    color: #e67e22;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge.down {
+    color: #dc3545;
+}
+
+.mock-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 60px;
+}
+
+.mock-chart .bar {
+    width: 12px;
+    border-radius: 6px;
+    background-color: #2e5b32;
+}
+
+.mock-chart .bar-current {
+    background-color: #e67e22;
+}
+
+/* Napipindot na stat cards (adopter_dashboard.php) */
+.stat-link {
+    cursor: pointer;
+}
+.stat-link .toggle-pills .pill {
+    cursor: pointer;
+}
+.stat-link:focus-visible {
+    outline: 3px solid #f59c23;
+    outline-offset: 3px;
+}
+
+/* Stat Card 3: Pending Applications */
+.green-card {
+    background-color: #2e5b32;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.pending-content h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.pending-body {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: #2e5b32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.app-count h2 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.app-count p {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.view-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-block;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 14px;
+    padding-top: 14px;
+    width: 100%;
+}
+
+/* ================= FEATURED PETS SECTION ================= */
+.featured-section {
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 20px 0;
+}
+
+.featured-section h2 {
+    color: #1b4d2e;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.pets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Responsive grid for smaller screens */
+@media (max-width: 1024px) {
+    .pets-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Telepono: tatlo pa rin bawat hanay - maliit na card na nakapatayo
+   (larawan sa itaas, pangalan, saka mga button) */
+@media (max-width: 600px) {
+    .pets-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+    .pets-grid > .pet-card {
+        min-width: 0;
+        padding: 6px 6px 8px;
+        border-radius: 12px;
+    }
+    .pets-grid > .pet-card:hover { transform: none; }
+    .pets-grid .card-top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+    /* Laging kuwadrado ang larawan: overflow hidden = hindi na mapapalaki ng
+       mismong larawan ang kahon, kaya pare-pareho ang taas ng lahat ng card */
+    .pets-grid .pet-img-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-radius: 9px;
+    }
+    .pets-grid .pet-img-container img { border-radius: 9px; }
+    .pets-grid .pet-info { min-width: 0; padding: 0 2px; }
+    .pets-grid .pet-info h3 {
+        font-size: 14px;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .pets-grid .pet-info .breed {
+        font-size: 11.5px;
+        line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .pets-grid .pet-info .meta { font-size: 11px; line-height: 1.35; }
+    .pets-grid .card-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        margin-top: auto;
+    }
+    .pets-grid .card-actions > * {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 4px !important;
+        font-size: 12px !important;
+        line-height: 1 !important;
+        border-radius: 8px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    /* My Applications: hindi tatlo bawat hanay - listahan na madaling basahin
+       (larawan sa kaliwa, pangalan, petsa, status at mga button sa kanan) */
+    .pets-grid.app-list { grid-template-columns: 1fr; gap: 10px; }
+    .pets-grid.app-list > .pet-card { padding: 12px; border-radius: 14px; }
+    .pets-grid.app-list .card-top { flex-direction: row; align-items: flex-start; gap: 12px; margin-bottom: 0; }
+    .pets-grid.app-list .pet-img-container { width: 76px; height: 76px; aspect-ratio: auto; flex-shrink: 0; }
+    .pets-grid.app-list .pet-img-container img { border-radius: 12px; }
+    .pets-grid.app-list .pet-info { flex: 1; padding: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+    .pets-grid.app-list .pet-info h3 { font-size: 16px; white-space: normal; }
+    .pets-grid.app-list .pet-info .meta { font-size: 12px; margin-top: 0; }
+    .pets-grid.app-list .pet-info .status-badge { margin: 2px 0; }
+    .pets-grid.app-list .pet-info .fee-note,
+    .pets-grid.app-list .pet-info .rejection-note { font-size: 12.5px; line-height: 1.4; margin: 2px 0 0; }
+    .pets-grid.app-list .pet-info .btn-pay-small {
+        margin-top: 4px;
+        font-size: 12.5px;
+        padding: 7px 12px;
+        white-space: normal;
+        line-height: 1.3;
+        text-align: left;
+    }
+
+    /* Puso (favorite) sa ibabaw ng larawan, may puting bilog para kita */
+    .pets-grid .fav-btn {
+        top: 10px;
+        right: 10px;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        font-size: 13px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.pet-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Taas na bahagi: Image katabi ng Info */
+.card-top {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.pet-img-container {
+    position: relative;
+    width: 100px;
+    height: 90px;
+    flex-shrink: 0;
+}
+
+.pet-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.fav-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #444;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.fav-btn:hover {
+    transform: scale(1.15);
+}
+
+.fav-btn.favorited {
+    color: #f97316;
+}
+
+.fav-btn.favorited i {
+    color: #f97316;
+}
+
+.pet-info h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.1;
+}
+
+.pet-info .breed {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+    margin-top: 2px;
+}
+
+.pet-info .meta {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+/* Baba na bahagi: Buttons Layout */
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pet-detail-section {
+    padding-top: 20px;
+}
+
+.pet-detail-card {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 30px;
+    background-color: #ffffff;
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.pet-detail-left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pet-detail-image {
+    overflow: hidden;
+    border-radius: 24px;
+}
+
+.pet-detail-image img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+}
+
+.pet-detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pet-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.pet-detail-header h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #14532d;
+}
+
+.pet-subtitle {
+    margin: 10px 0 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.status-pill {
+    display: inline-flex;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background-color: #dcfce7;
+    color: #166534;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.detail-grid h3,
+.detail-block h3 {
+    margin: 0 0 8px;
+    color: #1f2937;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.detail-grid p,
+.detail-block p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.8;
+}
+
+.detail-block {
+    background-color: #f8fafc;
+    border-radius: 18px;
+    padding: 22px;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-orange {
+    background-color: #f39c12;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-orange:hover,
+.btn-orange:focus {
+    background-color: #d97706;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.25);
+}
+
+.btn-text {
+    color: #2e5b32;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 14px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    font-weight: 700;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-text:hover,
+.btn-text:focus {
+    background-color: #f9fafb;
+    border-color: #2e5b32;
+    transform: translateY(-1px);
+}
+
+/* May aplikasyon na sa alagang ito: hindi na mapipindot ang "Adopt Now" */
+.btn-text.is-applied,
+.btn-text.is-applied:hover,
+.btn-text.is-applied:focus {
+    gap: 6px;
+    cursor: default;
+    color: #1e7e34;
+    background: #e6f4ea;
+    border-color: #b7dfc3;
+    transform: none;
+}
+
+.adoption-message {
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 1024px) {
+    .pet-detail-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .pet-detail-card {
+        padding: 24px;
+    }
+}
+
+/* ================= PREFERENCES FORM STYLES ================= */
+.preferences-form-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    max-width: 672px;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.form-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1b4d2e;
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Step Progress Bar */
+.step-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    padding: 0 16px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.step-item.active {
+    color: #2e5b32;
+    font-weight: 600;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.step-item.active .step-number {
+    background-color: #2e5b32;
+    color: #fff;
+}
+
+/* Hakbang na sinasagutan pa (Adoption Application): orange; nagiging green
+   (.active) kapag tapos na at lumipat na sa susunod */
+.step-item.current {
+    color: #e8750c;
+    font-weight: 600;
+}
+.step-item.current .step-number {
+    background-color: #f7941d;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(247, 148, 29, 0.2);
+    animation: stepPop .5s cubic-bezier(.34, 1.56, .64, 1), stepGlow 2.2s ease-in-out .5s infinite;
+}
+.step-item.current + .progress-line .progress-fill,
+.progress-fill.is-current { background-color: #f7941d; }
+
+/* Malambot na paglipat ng kulay at haba */
+.step-item { transition: color .35s ease; }
+.step-item .step-number { transition: background-color .35s ease, color .35s ease, box-shadow .35s ease; }
+.step-item.active .step-number { animation: stepDone .45s ease; }
+.progress-fill { transition: width .55s cubic-bezier(.65, 0, .35, 1), background-color .4s ease; }
+
+@keyframes stepPop {
+    0%   { transform: scale(.7); }
+    100% { transform: scale(1); }
+}
+@keyframes stepDone {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+}
+@keyframes stepGlow {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(247, 148, 29, 0.2); }
+    50%      { box-shadow: 0 0 0 7px rgba(247, 148, 29, 0.1); }
+}
+
+/* Paglipat ng hakbang ng form: papasok mula kanan (Next) o kaliwa (Back) */
+.form-step.step-in-next { animation: formStepNext .45s cubic-bezier(.22, 1, .36, 1); }
+.form-step.step-in-back { animation: formStepBack .45s cubic-bezier(.22, 1, .36, 1); }
+@keyframes formStepNext {
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes formStepBack {
+    from { opacity: 0; transform: translateX(-28px); }
+    to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .step-item .step-number, .form-step.step-in-next, .form-step.step-in-back { animation: none !important; }
+}
+
+.progress-line {
+    flex: 1;
+    height: 4px;
+    background-color: #e5e7eb;
+    margin: 0 16px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #2e5b32;
+    width: 50%;
+    /* transition: nasa itaas (.55s na haba + kulay), huwag dito para hindi ma-override */
+}
+
+/* Sa telepono: numero lang ang ibang step, pangalan lang ng kasalukuyang step
+   ang ipinapakita, para kasya ang 3-4 na step sa isang linya */
+@media (max-width: 560px) {
+    .step-progress { padding: 0; margin-bottom: 24px; }
+    .step-item { gap: 6px; font-size: 13px; flex-shrink: 0; }
+    .step-item:not(.active):not(.current) .step-label { display: none; }
+    .step-number { width: 28px; height: 28px; font-size: 13px; }
+    .progress-line { margin: 0 6px; min-width: 12px; }
+}
+
+/* Form Steps */
+.form-step h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1b4d2e;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-group select,
+.form-group input {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    color: #374151;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    outline: none;
+    border-color: #2e5b32;
+    box-shadow: 0 0 0 3px rgba(46, 91, 50, 0.1);
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.form-actions.between {
+    justify-content: space-between;
+}
+
+.btn-next,
+.btn-back,
+.btn-save {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-next {
+    background-color: #2e5b32;
+    color: #fff;
+}
+
+.btn-next:hover {
+    background-color: #1b4d2e;
+}
+
+.btn-back {
+    background-color: #fff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-back:hover {
+    background-color: #f9fafb;
+}
+
+.btn-save {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+.btn-save:hover {
+    background-color: #e67e22;
+}
+
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    color: #374151;
+    resize: vertical;
+    min-height: 70px;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border-color: #2e5b32;
+    box-shadow: 0 0 0 3px rgba(46, 91, 50, 0.1);
+}
+
+.form-group input[type="file"] {
+    padding: 8px;
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    font-size: 13px;
+    background-color: #f9fafb;
+}
+
+.radio-group {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.field-hint {
+    font-size: 12px;
+    color: #9aa6a3;
+    margin-top: -2px;
+}
+
+/* ================= INTERVIEW PICKER (Google Calendar style) =================
+   Calendar icon -> calendar ng mga araw na may staff -> sariling oras ng adopter */
+.ip-picker {
+    max-width: 480px;
+    margin: 8px auto 0;
+}
+
+.ip-toggle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ip-toggle:hover,
+.ip-picker.is-open .ip-toggle {
+    border-color: #1a73e8;
+    box-shadow: 0 2px 10px rgba(26, 115, 232, 0.15);
+}
+
+/* Kamukha ng icon ng Google Calendar */
+.gcal-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+    border-left: 4px solid #1a73e8;
+    border-bottom: 4px solid #34a853;
+    border-right: 4px solid #fbbc04;
+    box-shadow: 0 1px 4px rgba(60, 64, 67, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.gcal-icon::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    width: 14px;
+    height: 14px;
+    background: #ea4335;
+    border-top-left-radius: 6px;
+}
+
+.gcal-top {
+    background: #1a73e8;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-align: center;
+    padding: 3px 0 2px;
+}
+
+.gcal-num {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a73e8;
+    line-height: 1;
+}
+
+.ip-toggle-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ip-toggle-title {
+    font-size: 15px;
+    color: #202124;
+}
+
+.ip-toggle-sub {
+    font-size: 12.5px;
+    color: #5f6368;
+}
+
+.ip-chev {
+    color: #5f6368;
+    transition: transform 0.2s ease;
+}
+
+.ip-picker.is-open .ip-chev {
+    transform: rotate(180deg);
+}
+
+.ip-panel {
+    margin-top: 10px;
+    background: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 14px;
+    overflow: hidden;
+    animation: ipDrop 0.18s ease-out;
+}
+
+@keyframes ipDrop {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ip-panel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eceff1;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: #202124;
+}
+
+.ip-panel-head small {
+    font-weight: 600;
+    font-size: 12px;
+    color: #5f6368;
+}
+
+.ip-cal {
+    padding: 12px 16px 4px;
+}
+
+.ip-cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.ip-cal-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #3c4043;
+}
+
+.ip-cal-arrows {
+    display: flex;
+    gap: 4px;
+}
+
+.ip-cal-arrow {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #5f6368;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.ip-cal-arrow:hover:not(:disabled) {
+    background: #f1f3f4;
+}
+
+.ip-cal-arrow:disabled {
+    color: #dadce0;
+    cursor: default;
+}
+
+.ip-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 4px;
+    justify-items: center;
+}
+
+.ip-cal-dow {
+    font-size: 11px;
+    font-weight: 600;
+    color: #70757a;
+    padding: 4px 0;
+}
+
+.ip-cal-dow.weekend {
+    color: #bdc1c6;
+}
+
+.ip-day {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #bdc1c6;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: default;
+}
+
+.ip-day.today {
+    box-shadow: inset 0 0 0 1.5px #1a73e8;
+}
+
+.ip-day.open {
+    background: #e8f0fe;
+    color: #1967d2;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.ip-day.open:hover {
+    background: #d2e3fc;
+}
+
+.ip-day.selected,
+.ip-day.selected:hover {
+    background: #1a73e8;
+    color: #fff;
+}
+
+/* May oras nang kinuha ng ibang adopter sa araw na ito (may bakante pa rin) */
+.ip-day.has-taken {
+    position: relative;
+}
+
+.ip-day.has-taken::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    width: 4px;
+    height: 4px;
+    margin-left: -2px;
+    border-radius: 50%;
+    background: #f29900;
+}
+
+.ip-taken {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fef7e0;
+    border: 1px solid #fde293;
+}
+
+.ip-taken-title {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #b06000;
+    margin-bottom: 6px;
+}
+
+.ip-taken-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ip-taken-chip {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #fbd38d;
+    color: #8a4b00;
+    text-decoration: line-through;
+}
+
+/* Break ng staff - hindi naka-strikethrough, may sariling kulay */
+.ip-taken-chip.ip-break-chip {
+    text-decoration: none;
+    background: #eef3fd;
+    border-color: #c6d7f7;
+    color: #1967d2;
+}
+
+.ip-cal-empty {
+    margin: 8px 0 4px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fff3cd;
+    color: #7a5c00;
+    font-size: 13px;
+}
+
+.ip-legend {
+    display: flex;
+    gap: 16px;
+    padding: 6px 16px 12px;
+    font-size: 12px;
+    color: #5f6368;
+}
+
+.ip-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ip-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.ip-dot-open { background: #e8f0fe; box-shadow: inset 0 0 0 1px #aecbfa; }
+.ip-dot-off { background: #f1f3f4; }
+.ip-dot-special { background: #fce8e6; box-shadow: inset 0 0 0 1px #f4b6af; }
+
+/* Special day (hal. Dec 25 - Christmas Day): sarado ang City Hall, pero
+   napipindot para malaman ng adopter kung anong special day ito */
+.ip-day.special {
+    position: relative;
+    background: #fce8e6;
+    color: #c5221f;
+    font-weight: 700;
+}
+
+.ip-day.special:not([disabled]) {
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ip-day.special:not([disabled]):hover {
+    background: #fad2cf;
+}
+
+.ip-day.special[disabled] {
+    opacity: 0.5;
+}
+
+/* Maliit na bituin sa itaas na kanan */
+.ip-day.special::after {
+    content: '\2605';
+    position: absolute;
+    top: -2px;
+    right: -1px;
+    font-size: 9px;
+    line-height: 1;
+    color: #d93025;
+}
+
+.ip-day.special.viewing {
+    background: #d93025;
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.18);
+}
+
+.ip-day.special.viewing::after {
+    color: #d93025;
+}
+
+/* Paliwanag sa gilid kapag special day ang pinindot */
+.ip-special {
+    margin: 14px 16px 16px;
+    padding: 18px 16px 16px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid #f4c7c3;
+    box-shadow: 0 6px 18px rgba(197, 34, 31, 0.08);
+    text-align: center;
+    animation: ipSpecialIn 0.25s ease;
+}
+
+.ip-special[hidden] {
+    display: none;
+}
+
+@keyframes ipSpecialIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+.ip-special-badge {
+    width: 56px;
+    margin: 0 auto 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #f4c7c3;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.ip-special-mon {
+    display: block;
+    padding: 3px 0;
+    background: #d93025;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.ip-special-day {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    color: #202124;
+    line-height: 1.45;
+}
+
+.ip-special-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #fce8e6;
+    color: #c5221f;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.ip-special-tag i {
+    font-size: 9px;
+}
+
+.ip-special-name {
+    display: block;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #202124;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.ip-special-text {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    color: #5f6368;
+    line-height: 1.5;
+}
+
+/* Oras na ilalagay ng adopter */
+.ip-time {
+    padding: 14px 16px 16px;
+    background: #f8fafd;
+    border-top: 1px solid #eceff1;
+}
+
+.ip-time-date {
+    font-weight: 700;
+    font-size: 14.5px;
+    color: #1967d2;
+}
+
+.ip-hours {
+    margin: 4px 0 10px;
+    font-size: 12.5px;
+    color: #5f6368;
+}
+
+.ip-time-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #3c4043;
+    margin-bottom: 6px;
+}
+
+.ip-time-input {
+    width: 100%;
+    max-width: 220px;
+    padding: 10px 12px;
+    border: 1px solid #dadce0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #fff;
+}
+
+.ip-time-input:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+}
+
+.ip-error {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #c5221f;
+    font-weight: 600;
+}
+
+.ip-summary {
+    margin: 12px 0 0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #e6f4ea;
+    color: #1e7e34;
+    font-size: 13.5px;
+}
+
+.ip-note {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: #80868b;
+    line-height: 1.5;
+}
+
+/* ----- Maluwag na layout: buong lapad ng form, mas malaking espasyo ----- */
+.ip-picker {
+    max-width: none;
+    margin: 18px 0 0;
+}
+
+/* Maliit na button ng calendar */
+.ip-toggle {
+    width: auto;
+    max-width: 100%;
+    padding: 6px 12px 6px 8px;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.ip-toggle .gcal-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+}
+
+.ip-toggle .gcal-icon::after {
+    width: 8px;
+    height: 8px;
+    right: -2px;
+    bottom: -2px;
+    border-top-left-radius: 3px;
+}
+
+.ip-toggle .gcal-top {
+    font-size: 6px;
+    padding: 1px 0;
+    letter-spacing: 0.4px;
+}
+
+.ip-toggle .gcal-num {
+    font-size: 12px;
+}
+
+.ip-toggle-title {
+    font-size: 13px;
+}
+
+.ip-toggle-sub {
+    font-size: 11px;
+}
+
+.ip-chev {
+    font-size: 11px;
+    margin-left: 6px;
+}
+
+.ip-panel {
+    margin-top: 14px;
+}
+
+/* Mas maliit na calendar panel */
+.ip-panel {
+    max-width: 620px;
+}
+
+.ip-panel-head {
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    font-size: 13.5px;
+}
+
+.ip-panel-head small {
+    font-size: 11.5px;
+}
+
+.ip-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+}
+
+.ip-cal-col {
+    padding: 12px 16px 4px;
+    min-width: 0;
+}
+
+.ip-cal {
+    padding: 0;
+}
+
+.ip-cal-nav {
+    margin-bottom: 6px;
+}
+
+.ip-cal-title {
+    font-size: 13.5px;
+}
+
+.ip-cal-arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+}
+
+.ip-cal-grid {
+    row-gap: 2px;
+}
+
+.ip-cal-dow {
+    font-size: 10.5px;
+    padding: 2px 0;
+}
+
+.ip-day {
+    width: 32px;
+    height: 32px;
+    font-size: 12.5px;
+}
+
+.ip-legend {
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    padding: 8px 0 10px;
+    font-size: 11.5px;
+}
+
+.ip-dot {
+    width: 10px;
+    height: 10px;
+}
+
+/* Kanang column: oras na ilalagay ng adopter */
+.ip-side {
+    border-left: 1px solid #eceff1;
+    background: #f8fafd;
+    display: flex;
+    flex-direction: column;
+}
+/* Error ng picker: laging nakikita sa ilalim, kahit wala pang napiling petsa */
+.ip-side > .ip-error { margin: 0 14px 14px; }
+
+.ip-time {
+    padding: 14px 16px 16px;
+    border-top: none;
+    background: transparent;
+}
+
+.ip-time-date {
+    font-size: 13.5px;
+}
+
+.ip-hours {
+    margin: 4px 0 10px;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.ip-taken {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+}
+
+.ip-time-label {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.ip-time-input {
+    max-width: none;
+    padding: 7px 10px;
+    font-size: 13.5px;
+    border-radius: 8px;
+}
+
+.ip-error {
+    font-size: 12.5px;
+}
+.ip-error:not([hidden]) {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #fdecea;
+    border: 1px solid #f5c2bd;
+}
+
+/* Pili ng oras: AM/PM, oras, minuto - mga puwede lang ang lumalabas */
+.ip-time-input[hidden] { display: none !important; }
+.ip-tfield { position: relative; }
+.ip-tbtn {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 9px 12px; border: 1px solid #dadce0; border-radius: 10px; background: #fff;
+    font-family: inherit; font-size: 15px; color: #202124; cursor: pointer; text-align: left;
+}
+.ip-tbtn:focus-visible, .ip-tbtn[aria-expanded="true"] { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15); }
+.ip-tbtn:disabled { background: #f1f3f4; color: #9aa0a6; cursor: not-allowed; }
+.ip-tbtn i { color: #3c4043; font-size: 16px; }
+.ip-tval.empty { color: #80868b; letter-spacing: 1px; }
+/* Maliit na listahan sa ilalim ng field: oras | minuto | AM/PM */
+.ip-tpop {
+    position: static; margin-top: 6px; width: fit-content; display: flex; gap: 2px; padding: 6px;
+    background: #fff; border: 1px solid #dadce0; border-radius: 12px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+}
+.ip-tpop[hidden] { display: none; }
+.ip-tcol { width: 58px; max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; scrollbar-width: thin; }
+.ip-col-p { width: 56px; }
+.ip-titem { border: none; background: none; border-radius: 7px; padding: 7px 0; font-family: inherit; font-size: 14px; color: #202124; cursor: pointer; text-align: center; }
+.ip-titem:hover { background: #f1f3f4; }
+.ip-titem.on { background: #1a73e8; color: #fff; font-weight: 700; }
+.ip-tnote { font-size: 11.5px; color: #9aa0a6; text-align: center; padding: 8px 2px; }
+@media (max-width: 600px) { .ip-tbtn { font-size: 16px; } .ip-titem { padding: 9px 0; font-size: 15px; } }
+
+.ip-time-empty {
+    flex: 1;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #80868b;
+    line-height: 1.5;
+}
+
+.ip-time-empty[hidden] {
+    display: none;
+}
+
+.ip-time-empty i {
+    font-size: 22px;
+    color: #aecbfa;
+}
+
+.ip-summary {
+    margin-top: 16px;
+}
+
+.ip-note {
+    margin-top: 14px;
+    line-height: 1.6;
+}
+
+/* Makitid na screen (telepono o maliit na form): calendar sa itaas, oras sa ibaba */
+@media (max-width: 760px) {
+    .ip-body { grid-template-columns: 1fr; }
+    .ip-side { border-left: none; border-top: 1px solid #eceff1; }
+    .ip-time-empty { min-height: 0; flex-direction: row; padding: 16px 20px; }
+}
+
+@media (max-width: 420px) {
+    .ip-day { width: 30px; height: 30px; font-size: 12px; }
+    .ip-cal-col { padding: 10px 8px 4px; }
+    .ip-panel-head { padding: 10px 12px; }
+    .ip-time { padding: 12px; }
+}
+
+/* Application Status Widget (Adopter Dashboard) */
+.application-widget {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-pet-thumb {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.app-widget-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-pet-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: #f39c12;
+    margin: 0 0 2px 0;
+}
+
+.app-date {
+    font-size: 12px;
+    color: #fff;
+    margin: 0 0 6px 0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-pending {
+    background-color: #fef3d6;
+    color: #b25900;
+}
+
+.status-under-review {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+}
+
+.status-approved {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+}
+
+.status-rejected {
+    background-color: #fce8e6;
+    color: #c5221f;
+}
+
+.rejection-note {
+    font-size: 12px;
+    color: #c5221f;
+    margin-top: 6px;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.shelter-section {
+    margin-top: 20px;
+}
+
+.shelter-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.9fr;
+    gap: 24px;
+}
+
+.map-card,
+.info-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+.map-header {
+    margin-bottom: 16px;
+}
+
+.map-header h2 {
+    font-size: 24px;
+    color: #1b4d2e;
+    margin-bottom: 6px;
+}
+
+.map-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.map-container {
+    width: 100%;
+    min-height: 390px;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid #d1d5db;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    min-height: 390px;
+}
+
+.map-note {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #52606d;
+}
+
+.info-card h2 {
+    font-size: 24px;
+    color: #1b4d2e;
+    margin-bottom: 10px;
+}
+
+.location-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2e5b32;
+    margin-bottom: 6px;
+}
+
+.location-address {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.info-details {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.info-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-details span {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.info-details strong {
+    font-size: 16px;
+    color: #111827;
+    line-height: 1.4;
+}
+
+.location-card {
+    background-color: #f8fafc;
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.location-pill {
+    display: inline-flex;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background-color: #d1fae5;
+    color: #166534;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.location-card p {
+    color: #374151;
+    line-height: 1.7;
+}
+
+@media (max-width: 1024px) {
+    .shelter-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.highlight-banner {
+    background: linear-gradient(135deg, #1f5d35, #2ea043);
+    border-radius: 24px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.highlight-banner h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.highlight-banner p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.7;
+    max-width: 760px;
+}
+
+.badge-highlight {
+    display: inline-flex;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background-color: #f97316;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #d9f99d;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.location-tag i {
+    color: #fed7aa;
+}
+
+/* ===== Location page, telepono: sticky na banner, buong lapad =====
+   Dumidikit sa ilalim ng header (--sp-stick-top, galing sa connection/responsive.php).
+   Kapag nakadikit na (.is-stuck), lumiliit: title at address na lang ang natitira. */
+@media (max-width: 900px) {
+    .highlight-banner.is-sticky {
+        position: sticky;
+        top: var(--sp-stick-top, 0px);
+        z-index: 40;
+        margin-left: -12px;
+        margin-right: -12px;
+        border-radius: 0;
+        padding-left: 16px;
+        padding-right: 16px;
+        animation: none;          /* walang transform - hindi nasisira ang sticky */
+        transition: box-shadow .2s ease;   /* walang animation ng taas: iwas pagkislap (spSetStuck) */
+    }
+    .highlight-banner.is-sticky > div > p,
+    .highlight-banner.is-sticky .badge-highlight {
+        max-height: 120px;
+        overflow: hidden;
+        transition: opacity .2s ease;
+    }
+    .highlight-banner.is-sticky.is-stuck {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        gap: 4px;
+        box-shadow: 0 8px 14px -10px rgba(0, 0, 0, 0.45);
+    }
+    .highlight-banner.is-sticky.is-stuck > div > p,
+    .highlight-banner.is-sticky.is-stuck .badge-highlight {
+        max-height: 0;
+        opacity: 0;
+        margin: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .highlight-banner.is-sticky.is-stuck h1 { font-size: 17px; margin-top: 0; }
+    .highlight-banner.is-sticky.is-stuck .location-tag { font-size: 12px; }
+}
+
+/* Mga button sa ilalim ng mapa (Location page) */
+.map-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+}
+.map-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1.5px solid #cfe0d4;
+    background: #ffffff;
+    color: #1b4d2e;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.map-action:hover { background: #f0f7f3; border-color: #2e5b32; transform: translateY(-1px); }
+.map-action.is-primary { background: #2e5b32; border-color: #2e5b32; color: #ffffff; }
+.map-action.is-primary:hover { background: #1b4d2e; }
+
+/* ===== Location page sa telepono: mas maliit at maayos na sukat ===== */
+@media (max-width: 600px) {
+    .highlight-banner { padding: 18px; border-radius: 18px; gap: 10px; margin-bottom: 16px; }
+    .highlight-banner h1 { font-size: 22px; line-height: 1.2; margin-top: 8px; }
+    .highlight-banner p { font-size: 13.5px; line-height: 1.55; }
+    .badge-highlight { font-size: 10.5px; padding: 5px 10px; letter-spacing: 0.06em; }
+    .location-tag { font-size: 12.5px; gap: 8px; }
+
+    .shelter-section { margin-top: 0; }
+    .shelter-grid { gap: 14px; }
+    .map-card, .info-card { padding: 16px; border-radius: 18px; }
+    .map-header { margin-bottom: 12px; }
+    .map-header h2, .info-card h2 { font-size: 18px; margin-bottom: 4px; }
+    .map-header p { font-size: 13px; }
+    .map-container { min-height: 260px; border-radius: 14px; }
+    .map-container iframe { min-height: 260px; }
+    .map-note { margin-top: 10px; font-size: 12px; }
+
+    .map-actions { gap: 8px; margin-top: 12px; }
+    .map-action { height: 40px; padding: 0 8px; font-size: 12.5px; gap: 6px; border-radius: 10px; }
+
+    .location-name { font-size: 16px; }
+    .location-address { font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
+    .info-details { gap: 12px; margin-bottom: 16px; }
+    .info-details span { font-size: 11px; }
+    .info-details strong { font-size: 14px; }
+    .location-card { padding: 14px; border-radius: 14px; }
+    .location-pill { font-size: 11.5px; padding: 5px 11px; margin-bottom: 8px; }
+    .location-card p { font-size: 13px; line-height: 1.55; }
+}
+
+@media (max-width: 700px) {
+    .main-content {
+        --mc-pad: 16px;
+        padding: 20px var(--mc-pad) 20px var(--mc-pad);
+    }
+}
+
+/* Telepono: nakatago ang profile/bell habang nasa hanay pa ng mga link. Inililipat ito
+   ng connection/responsive.php sa mobile bar sa itaas (doon ito lumalabas). Nandito rin
+   ito (hindi lang sa responsive.php na nasa dulo ng page) para nakatago na mula sa
+   unang paglabas ng page - walang saglit na "pagbaba" ng profile bago umakyat. */
+@media (max-width: 900px) {
+    .top-navbar .user-profile-link,
+    .top-navbar .user-profile,
+    .top-navbar .sp-header-right { display: none !important; }
+}
+
+/* User Profile Link Adjustments */
+.user-profile-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* Simpleng profile: bilog na larawan + pangalan. Walang background,
+   walang kapsula at walang hover effect. */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Larawan na may orange-berdeng singsing */
+.profile-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 3px solid transparent;
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        conic-gradient(from 200deg, #f7921e, #ffc46b, #7fbf5a, #2e5b32, #f7921e) border-box;
+    box-shadow: 0 4px 12px rgba(46, 91, 50, 0.22);
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Maliit na berdeng tuldok: naka-login */
+.user-profile::before {
+    content: "";
+    position: absolute;
+    left: 35px;
+    top: 35px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #3fae72;
+    border: 2.5px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-avatar img {
+    border: 2px solid #fff;
+    box-sizing: border-box;
+}
+
+.profile-avatar i {
+    color: #2e5b32 !important;
+    font-size: 20px;
+}
+
+.user-profile span {
+    display: block;
+    color: #1f3d1a;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ================= SEARCH AND FILTER SECTION ================= */
+.search-filter-section {
+    margin-bottom: 30px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    /* Saktong laki lang, hindi buong lapad ng page */
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    cursor: text;              /* kahit saan sa kahon, makakapag-type */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== Search Pets: title sa kaliwa, search bar + bilog (i) sa kanan, iisang hanay =====
+   - bilog (i) = sarado ang paalala; pindot = lumalabas ito sa ilalim ng hanay
+   - ✕ = bilog agad sa tabi ng search bar (may maliit na talbog)
+   Ang bukas/sara ay nasa JS ng search_pets.php (.is-dot) */
+.search-zone.sp-head-row {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start; /* hindi gumagalaw ang title/search habang nag-a-animate */
+    gap: 12px 16px;
+    margin: -15px 0 18px;      /* itinaas nang 15px, mas malapit sa subtitle */
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e6eee8;
+    overflow-x: clip;          /* walang horizontal scroll habang tinitiklop */
+    overflow-clip-margin: 10px; /* pero hindi napuputol ang anino ng bilog */
+}
+/* Ang guhit at orange na accent ay nasa buong hanay na, hindi sa title lang */
+.sp-head-row::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 72px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #f7941d, #ffc46b);
+}
+.sp-head-row > h2.sp-list-head { flex: 1 1 auto; margin: 0; padding: 0; border: 0; }
+.sp-head-row > h2.sp-list-head::after { display: none; }
+.sp-head-row > .search-row { flex: 0 1 420px; margin: 0 0 0 auto; }
+.sp-head-row.has-note > .search-row { margin-right: 48px; }  /* puwang para sa bilog */
+.search-row .search-container { max-width: none; margin-bottom: 0; }
+
+/* Bukas na paalala: buong lapad, sa ilalim ng title at search bar */
+.sp-head-row > .pref-note { flex: 0 0 100%; }
+.pref-note {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 44px;
+    box-sizing: border-box;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid transparent;
+    padding: 0 8px 0 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    /* Ang paggalaw/laki ay nasa JS ng search_pets.php; kulay lang ang dito */
+    transition: background-color .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.pref-note-text {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity .15s ease;
+}
+.pref-note-close { transition: opacity .15s ease, background-color .2s ease; }
+
+
+/* Ang maliit na bilog (mapusyaw na berde) */
+.pref-note-dot {
+    position: absolute;
+    inset: 0;
+    border: none;
+    background: transparent;
+    color: #3f8f4a;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+.pref-note.is-dot {
+    /* Sarado: nasa kanan ng search bar, nasa gitna ng taas nito */
+    position: absolute;
+    right: 0;
+    left: auto;
+    top: var(--dot-top, 0px);
+    margin: 0;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #eef8f0;
+    border-color: #c8e6cc;
+    box-shadow: 0 2px 6px rgba(46, 125, 50, 0.12);
+}
+.pref-note.is-dot:hover { background-color: #dcf0e0; box-shadow: 0 4px 10px rgba(46, 125, 50, 0.18); }
+.pref-note.is-dot .pref-note-text,
+.pref-note.is-dot .pref-note-close { opacity: 0; pointer-events: none; transition-delay: 0s; }
+.pref-note.is-dot .pref-note-dot { opacity: 1; pointer-events: auto; transition-delay: .35s; }
+.pref-note.no-anim, .pref-note.no-anim * { transition: none !important; animation: none !important; }
+.pref-note-dot:focus { outline: none; }
+.pref-note-dot:focus-visible { outline: 3px solid #a7d7ae; outline-offset: 2px; border-radius: 50%; }
+
+@media (max-width: 700px) {
+    /* Sa maliit na screen, puwedeng bumaba sa 2 linya ang paalala */
+    .pref-note:not(.is-dot) { height: auto; min-height: 44px; padding-top: 8px; padding-bottom: 8px; }
+    .pref-note:not(.is-dot) .pref-note-text { white-space: normal; }
+}
+
+.pref-note-close {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #2e7d32;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.pref-note-close:hover { background: rgba(46, 125, 50, 0.12); }
+.pref-note-close:focus { outline: none; }
+.pref-note-close:focus-visible { outline: 2px solid #2e7d32; outline-offset: 1px; }
+.pref-note-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+
+.search-container:focus-within {
+    border-color: #2e5b32;
+    box-shadow: 0 0 0 3px rgba(46, 91, 50, 0.1);
+}
+
+.search-container i {
+    color: #2e5b32;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.search-container input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    background: transparent;
+}
+
+.search-container input::placeholder {
+    color: #9ca3af;
+}
+
+.filter-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 1024px) {
+    .filter-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .filter-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-group select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #fff;
+    color: #374151;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    transition: border-color 0.2s ease;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: #2e5b32;
+    box-shadow: 0 0 0 3px rgba(46, 91, 50, 0.1);
+}
+
+/* ================= PETS SECTION ================= */
+.pets-section {
+    margin-bottom: 30px;
+}
+
+.pets-section h2 {
+    color: #1b4d2e;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.top-nav-links a.active {
+    color: #2e5b32;
+}
+
+.top-nav-links a.active::after {
+    width: 100%;
+}
+
+/* ================= REVEAL HABANG NAG-I-SCROLL =================
+   Sa mga listahan ng card (Dashboard, Search Pets, Favorites, My Applications):
+   ang card na lumilitaw mula sa ibaba ay umaangat habang lumilinaw at lumalaki.
+   Ang JS (list_count.js) ang naglalagay ng .sp-reveal at .is-in; walang JS = normal
+   lang ang mga card. Ginamit ang `translate`/`scale` (hindi `transform`) para
+   gumana pa rin ang pag-angat ng card kapag tinapatan ng mouse. */
+.sp-scroll-host > .pets-grid > .pet-card.sp-reveal {
+    animation: none;            /* papalitan ang lumang fade sa pagbukas ng page */
+    opacity: 0;
+    filter: blur(8px);
+    translate: 0 70px;
+    scale: .92;
+    transition: opacity .6s ease, filter .6s ease,
+                translate .85s cubic-bezier(.22, 1, .36, 1), scale .85s cubic-bezier(.22, 1, .36, 1),
+                transform .2s ease, box-shadow .2s ease;
+}
+.sp-scroll-host > .pets-grid > .pet-card.sp-reveal.is-in {
+    opacity: 1;
+    filter: none;
+    translate: 0 0;
+    scale: 1;
+}
+
+/* ================= TITLE NG LISTAHAN =================
+   Icon sa berdeng bilog + title + bilang, may manipis na guhit at
+   orange na accent sa ilalim. */
+h2.sp-list-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e6eee8;
+    color: #1b4d2e;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+}
+h2.sp-list-head::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 72px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #f7941d, #ffc46b);
+}
+.sp-head-ico {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3f7d45, #1b4d2e);
+    box-shadow: 0 6px 14px rgba(27, 77, 46, 0.25);
+    color: #fff;
+    font-size: 16px;
+}
+.sp-head-ico i { color: #fff; }
+.sp-count {
+    margin-left: 2px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: #fff4e5;
+    border: 1px solid #fde1b8;
+    color: #b45f06;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    white-space: nowrap;
+}
+.sp-count[hidden] { display: none; }
+/* Telepono: iisang linya ang title ng listahan (hal. "Recommended For You") */
+@media (max-width: 600px) {
+    h2.sp-list-head { font-size: 17px; gap: 8px; line-height: 1.25; }
+    .sp-head-ico { width: 30px; height: 30px; border-radius: 9px; font-size: 13px; }
+    .sp-count { font-size: 11px; padding: 3px 9px; margin-left: auto; }
+}
+
+/* ================= LISTAHAN LANG ANG NAG-I-SCROLL =================
+   Sa mga page na may <body class="sp-list-scroll">: hindi na nag-i-scroll ang
+   buong page sa laptop/desktop - ang listahan ng mga card lang (.pets-grid sa
+   loob ng .sp-scroll-host). Sa maliit o mababang screen, bumabalik sa dati
+   (buong page ang nag-i-scroll) para hindi maipit ang listahan.
+   Gamit sa: adopter_dashboard, search_pets, favorites, my_applications. */
+@media (min-width: 901px) and (min-height: 640px) {
+    .sp-list-scroll .main-content {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .sp-list-scroll .main-content > * { flex-shrink: 0; }
+    .sp-list-scroll .main-content > .sp-scroll-host {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .sp-list-scroll .sp-scroll-host > * { flex-shrink: 0; }
+    .sp-list-scroll .sp-scroll-host > .pets-grid {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        align-content: start;
+        /* puwang para hindi maputol ang anino at ang pag-angat ng mga card */
+        padding: 6px 10px 18px 4px;
+        margin: -6px -10px 0 -4px;
+        scrollbar-width: thin;
+        scrollbar-color: #c5d3c8 transparent;
+    }
+    .sp-list-scroll .sp-scroll-host > .pets-grid::-webkit-scrollbar { width: 8px; }
+    .sp-list-scroll .sp-scroll-host > .pets-grid::-webkit-scrollbar-thumb { background: #c5d3c8; border-radius: 8px; }
+    .sp-list-scroll .sp-scroll-host > .pets-grid::-webkit-scrollbar-track { background: transparent; }
+}

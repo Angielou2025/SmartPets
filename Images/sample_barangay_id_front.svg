@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 856 540" role="img" aria-label="Sample Barangay ID, front side">
+  <defs>
+    <linearGradient id="org" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f39a3d"/><stop offset="1" stop-color="#e07b1a"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <clipPath id="card"><rect width="856" height="540" rx="28"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="856" height="540" fill="url(#org)"/>
+    <path d="M0 70 C 220 10, 360 120, 560 60 S 820 20, 856 40 L 856 470 C 700 540, 520 430, 330 500 S 60 470, 0 520 Z" fill="#fff"/>
+    <path d="M0 70 C 220 10, 360 120, 560 60 S 820 20, 856 40" fill="none" stroke="#5cc04a" stroke-width="10"/>
+    <path d="M856 470 C 700 540, 520 430, 330 500 S 60 470, 0 520" fill="none" stroke="#5cc04a" stroke-width="10"/>
+  </g>
+
+  <!-- Mga generic na seal (hindi totoong logo) -->
+  <g transform="translate(96 108)">
+    <circle r="50" fill="#fff" stroke="#2a62de" stroke-width="6"/>
+    <circle r="34" fill="#e8eefc"/>
+    <text y="8" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#2a62de">BRGY</text>
+  </g>
+  <g transform="translate(760 108)">
+    <circle r="50" fill="#fff" stroke="#c0392b" stroke-width="6"/>
+    <circle r="34" fill="#fdecea"/>
+    <text y="8" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#c0392b">CITY</text>
+  </g>
+
+  <g font-family="Georgia, 'Times New Roman', serif" text-anchor="middle" fill="#1f2937">
+    <text x="428" y="92" font-size="20" font-style="italic">Republic of the Philippines</text>
+    <text x="428" y="130" font-size="36" font-weight="700">Barangay 000</text>
+    <text x="428" y="160" font-size="18">Zone 0, District 0, Caloocan City</text>
+  </g>
+  <text x="428" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="1" fill="#1f2937">BARANGAY IDENTIFICATION CARD</text>
+
+  <!-- Larawan: silhouette lang (walang totoong mukha) -->
+  <g transform="translate(70 228)">
+    <rect width="190" height="220" rx="8" fill="#eef2f7" stroke="#cbd5e1" stroke-width="3"/>
+    <g filter="url(#soft)" fill="#94a3b8">
+      <circle cx="95" cy="88" r="44"/>
+      <path d="M20 220 C 26 150, 70 136, 95 136 S 164 150, 170 220 Z"/>
+    </g>
+  </g>
+  <text x="165" y="478" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#1f2937">DELA CRUZ, JUAN P.</text>
+
+  <g font-family="'Courier New', monospace" fill="#1f2937">
+    <text x="300" y="246" font-family="Arial, sans-serif" font-size="17" fill="#475569">This is to certify that</text>
+    <text x="300" y="290" font-size="30" font-weight="700">JUAN P. DELA CRUZ</text>
+    <line x1="300" y1="300" x2="790" y2="300" stroke="#1f2937" stroke-width="2"/>
+    <text x="300" y="338" font-size="24" font-weight="700">123 SAMPLE ST., CALOOCAN</text>
+    <line x1="300" y1="348" x2="790" y2="348" stroke="#1f2937" stroke-width="2"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#334155">
+    <text x="300" y="378">whose picture, signature and thumbmark appear hereon is a</text>
+    <text x="300" y="398">registered resident of this Barangay.</text>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#1f2937">
+    <text x="610" y="236" font-size="18">ID No.</text>
+    <text x="672" y="236" font-size="26" font-weight="700" fill="#c0392b">0000</text>
+    <line x1="668" y1="244" x2="790" y2="244" stroke="#1f2937" stroke-width="2"/>
+    <path d="M560 438 c 20 -30, 40 10, 60 -14 s 30 18, 60 -6" fill="none" stroke="#1e3a8a" stroke-width="3"/>
+    <line x1="540" y1="450" x2="790" y2="450" stroke="#1f2937" stroke-width="2"/>
+    <text x="665" y="472" text-anchor="middle" font-size="16" font-weight="700">PUNONG BARANGAY</text>
+  </g>
+
+  <!-- SAMPLE watermark -->
+  <g transform="rotate(-18 428 300)" opacity="0.22">
+    <text x="428" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="150" font-weight="900" fill="#b91c1c" letter-spacing="8">SAMPLE</text>
+  </g>
+</svg>

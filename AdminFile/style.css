@@ -1,0 +1,1742 @@
+:root {
+  --bg-main: #f5e7c6;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #1b4332;
+  --text-dark: #2d3748;
+  --primary-green: #2d6a4f;
+  --dark-green: #1b4332;
+  --accent-orange: #f4a261;
+  --card-dark: #121212;
+  --badge-completed: #e76f51;
+  --badge-pending: #e9c46a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--sidebar-border);
+  color: var(--text-dark);
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: var(--sidebar-bg);
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 15px;
+  border-top-right-radius: 40px;
+  /* Palaging kasintaas ng screen at nakadikit sa itaas, kaya pare-pareho ang
+     puwesto ng Logout kahit anong page ang buksan sa sidebar */
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.logo-circle {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  padding: 2px;
+  border: 1px solid green;
+  overflow: hidden;
+}
+
+.logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+.brand h2 {
+  font-size: 20px;
+  color: #000;
+}
+
+.brand h2 span {
+  color: var(--accent-orange);
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: var(--primary-green);
+  font-weight: 600;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.menu-item.active {
+  background-color: var(--bg-main);
+  color: #000;
+}
+
+.menu-item:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+/* Bilang ng unread message sa Messages menu item - kahit hindi pa binuksan
+   ang page, makikita agad kung may bagong chat. Nawawala pagkatapos mabasa. */
+.sp-unread-badge {
+  margin-left: auto;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--primary-green);
+  font-weight: 600;
+  padding: 10px 18px;
+}
+
+.city-illustration {
+  line-height: 0;
+}
+
+.city-illustration img {
+  width: 100%;
+  height: auto;
+  max-height: 170px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* --- MAIN SECTION --- */
+.main-wrapper {
+  flex: 1;
+  min-width: 0; /* para hindi mapiga ang sidebar kapag malawak ang table */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+  border-top-left-radius: 30px;
+}
+
+/* Page Transition Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-content {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.dashboard-content {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.top-header {
+  background-color: #ffffff;
+  height: 65px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 2px solid rgba(0,0,0,0.05);
+  border-top-left-radius: 30px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dashboard-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* --- CARDS GRID --- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.stat-info h1 {
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+.stat-info p {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.stat-icon {
+  font-size: 32px;
+}
+
+/* Card Themes */
+.white-card {
+  background: #E59500;
+  color: #fff;
+  box-shadow: 0 4px 0px rgba(255, 111, 1, 0.86);
+}
+.white-card .stat-icon {
+  color: #fff;
+}
+
+.black-card {
+  background: var(--card-dark);
+  color: #fff;
+  box-shadow: 0 4px 0px rgba(67, 67, 67, 0.86);
+}
+.black-card .stat-icon {
+  background: #fff;
+  color: #000;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.green-orange-card {
+  background: var(--dark-green);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 0px hsl(99, 34%, 46%);
+}
+.green-orange-card::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 25%;
+  background: var(--accent-orange);
+}
+.green-orange-card .stat-icon {
+  z-index: 1;
+  background: #fff;
+  color: #000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.solid-green-card {
+  background: var(--primary-green);
+  color: #fff;
+  box-shadow: 0 4px 0px hsl(99, 34%, 46%);
+}
+
+/* --- DETAILS GRID --- */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 25px;
+}
+
+.panel {
+  background: #ffffff;
+  border-radius: 25px;
+  padding: 20px;
+  min-width: 0; /* para hindi pilitin ng table ang grid item lampas sa screen */
+  border: 2px solid #333;
+}
+
+/* Recent Activities Panel */
+.activities-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.panel-header h3 {
+  font-size: 22px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.table-container {
+  background: #333333;
+  border-radius: 15px;
+  padding: 15px;
+  color: #fff;
+  flex: 1;
+  /* May max height: nagsi-scroll sa loob kapag dumami ang rows imbes na humaba ang panel */
+  max-height: 420px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #777 transparent;
+}
+
+.table-container thead th {
+  position: sticky;
+  top: 0;
+  background: #333333;
+  z-index: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  padding: 0 8px 12px;
+  font-size: 15px;
+}
+
+th:nth-child(1) { color: var(--accent-orange); }
+
+td {
+  padding: 10px 8px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.activity-row td:first-child,
+.activity-row td:last-child {
+  white-space: nowrap;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.status-badge.completed {
+  background-color: var(--badge-completed);
+}
+
+.status-badge.pending {
+  background-color: var(--badge-pending);
+  color: #333;
+}
+
+.status-badge.failed {
+  background-color: #c5221f;
+}
+
+.activity-role {
+  display: block;
+  font-size: 11px;
+  color: #b5b5b5;
+}
+
+.activities-empty {
+  margin: 0;
+  padding: 24px 10px;
+  text-align: center;
+  color: #b5b5b5;
+  font-size: 13px;
+}
+
+.activities-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.activities-panel.collapsed .activities-body {
+  display: none;
+}
+
+.view-all-btn {
+  text-decoration: none;
+  display: inline-block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.panel-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.show-more-btn {
+  background-color: var(--accent-orange);
+  color: #000;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Chart Panel */
+.chart-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
+}
+
+.chart-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.toggle-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggle-btn {
+  border: none;
+  padding: 8px 24px;
+  border-radius: 15px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+}
+
+.toggle-btn:hover {
+  transform: translateX(3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-btn.active-orange {
+  background-color: var(--accent-orange);
+  box-shadow: 0 4px 12px rgba(244, 162, 97, 0.4);
+}
+
+.toggle-btn.green {
+  background-color: var(--primary-green);
+  opacity: 0.7;
+}
+
+.toggle-btn.green:hover {
+  opacity: 1;
+  background-color: var(--dark-green);
+}
+
+.chart-title {
+  flex: 1;
+  text-align: center;
+  padding: 0 15px;
+}
+
+.chart-title h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark-green);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(27, 67, 50, 0.1);
+  display: inline-block;
+}
+
+.chart-summary {
+  text-align: right;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(27, 67, 50, 0.1);
+}
+
+.chart-summary p {
+  color: #666;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.chart-summary strong {
+  color: var(--dark-green);
+  font-size: 18px;
+  display: block;
+}
+
+.chart-wrapper {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  padding: 15px;
+  border: 1px solid rgba(27, 67, 50, 0.05);
+}
+
+/* HTML tooltip ng chart: nagsi-scroll ang listahan ng nag-adopt kapag marami */
+.chart-tooltip {
+  position: absolute;
+  z-index: 20;
+  background: rgba(27, 67, 50, 0.96);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  min-width: 200px;
+  max-width: 280px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+}
+.chart-tooltip .ct-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.chart-tooltip .ct-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.chart-tooltip .ct-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.chart-tooltip .ct-sub {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #e9f5ee;
+}
+.chart-tooltip .ct-list {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  max-height: 140px;
+  overflow-y: auto;
+  font-size: 12px;
+  color: #e9f5ee;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+.chart-tooltip .ct-list li {
+  padding: 3px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.chart-tooltip .ct-list li:first-child {
+  border-top: none;
+}
+
+/* --- DASHBOARD TABS: iisang container, rectangle na mga tab sa itaas.
+       Lumalabas lang ang section kapag pinindot ang tab; ang unang pinindot
+       ang nasa itaas. --- */
+.dash-tabs-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dash-tabbar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dash-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 14px;
+  border: 2px solid #333;
+  border-radius: 12px;
+  background: #fff;
+  color: #333;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.dash-tab i {
+  font-size: 17px;
+  color: var(--primary-green);
+  transition: color 0.2s ease;
+}
+
+.dash-tab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.dash-tab.active {
+  background: var(--primary-green);
+  border-color: var(--primary-green);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--dark-green);
+}
+
+.dash-tab.active i {
+  color: #fff;
+}
+
+.dash-empty {
+  text-align: center;
+  padding: 40px 16px;
+  border: 2px dashed #d8d2c4;
+  border-radius: 15px;
+  color: #777;
+}
+
+.dash-empty i {
+  font-size: 28px;
+  color: var(--accent-orange);
+  margin-bottom: 10px;
+}
+
+.dash-empty p {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.dash-empty span {
+  font-size: 13px;
+}
+
+.dash-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dash-section {
+  border: 1.5px solid #e4ded1;
+  border-radius: 18px;
+  padding: 18px;
+  animation: dashSectionIn 0.25s ease;
+}
+
+@keyframes dashSectionIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Payment Monitoring */
+.pay-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.pay-stat {
+  background: #faf8f5;
+  border: 1px solid rgba(27, 67, 50, 0.12);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.pay-stat span {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.pay-stat strong {
+  font-size: 20px;
+  color: var(--dark-green);
+}
+
+.pay-stat-alert strong {
+  color: #c5221f;
+}
+
+.status-badge.unpaid {
+  background-color: #6b6b6b;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+  .pay-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .dash-tabbar {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .dash-tab {
+    justify-content: flex-start;
+    padding: 13px 14px;
+  }
+  .dash-section {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 992px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 5px solid var(--sidebar-border);
+    border-top-right-radius: 0;
+  }
+  .top-header {
+    padding: 0 16px;
+  }
+  .dashboard-content {
+    padding: 16px 0;
+    gap: 18px;
+  }
+  .panel {
+    padding: 16px;
+    border-radius: 18px;
+  }
+  .panel-header h3 {
+    font-size: 19px;
+  }
+  .stat-info h1 {
+    font-size: 30px;
+  }
+  /* Chart controls: isang hilera sa itaas imbes na magkakatabi nang pahalang */
+  .chart-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .toggle-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .chart-title {
+    order: 3;
+    flex-basis: 100%;
+    text-align: left;
+    padding: 0;
+  }
+  .chart-summary {
+    margin-left: auto;
+  }
+  .chart-wrapper {
+    min-height: 240px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-card {
+    padding: 16px;
+  }
+  .chart-wrapper {
+    min-height: 220px;
+  }
+  .show-more-btn {
+    padding: 9px 22px;
+    font-size: 13px;
+  }
+}
+/* ============================================
+   Export Records button - Staff Pet Inventory at Payments
+   (ginagamit ng StaffFile pages na naglo-load ng style.css)
+   ============================================ */
+.btn-export-records {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--primary-green, #2d6a4f);
+  border: 1.5px solid var(--primary-green, #2d6a4f);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-export-records:hover {
+  background: var(--primary-green, #2d6a4f);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(45, 106, 79, 0.22);
+}
+/* ============================================================
+   ADMIN DASHBOARD (index.php lang - body.admin-dash)
+   Itsura na kinopya mula sa Staff Dashboard (StaffFile/staff_dashboard.php)
+   - berde ang mga card sa halip na asul, kapareho ng Admin Reports.
+   Naka-scope dito dahil ginagamit din ng StaffFile ang style.css.
+   ============================================================ */
+
+/* ----- Mga stat card: madilim (kaliwa) hanggang maliwanag (kanan) ----- */
+body.admin-dash .cards-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+body.admin-dash .stat-card {
+  position: relative;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  gap: 12px;
+  padding: 18px 18px 18px 20px;
+  min-height: 120px;
+  overflow: visible;
+}
+body.admin-dash .stat-card::after { display: none; } /* walang guhit sa gilid */
+body.admin-dash .stat-info { min-width: 0; }
+body.admin-dash .stat-info h1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  color: #fff;
+}
+body.admin-dash .stat-info p {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+}
+body.admin-dash .white-card { background: linear-gradient(135deg, #081c15 0%, #12352a 100%); box-shadow: 0 8px 18px rgba(8, 28, 21, 0.30); }
+body.admin-dash .black-card { background: linear-gradient(135deg, #1b4332 0%, #245a43 100%); box-shadow: 0 8px 18px rgba(27, 67, 50, 0.28); }
+body.admin-dash .green-orange-card { background: linear-gradient(135deg, #2d6a4f 0%, #357a5b 100%); box-shadow: 0 8px 18px rgba(45, 106, 79, 0.28); }
+body.admin-dash .solid-green-card { background: linear-gradient(135deg, #40916c 0%, #52a37d 100%); box-shadow: 0 8px 18px rgba(64, 145, 108, 0.30); }
+
+/* Icon: puti sa loob ng malabong "salamin" na tile */
+body.admin-dash .stat-card .stat-icon {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 14px rgba(0, 0, 0, 0.12);
+  color: #fff;
+  font-size: 22px;
+  z-index: auto;
+}
+
+/* ----- Panel na may tatlong tab ----- */
+body.admin-dash .dash-tabs-panel {
+  padding: 20px;
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(10, 10, 10, 0.04);
+  gap: 16px;
+}
+
+/* Segmented na mga tab na may kulay (berde, asul, orange) */
+body.admin-dash .dash-tabbar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: max-content;
+  max-width: 100%;
+  gap: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+body.admin-dash .dash-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #fff;
+  transform: none;
+  box-shadow: none;
+  transition: background-color .25s ease, box-shadow .25s ease;
+}
+body.admin-dash .dash-tab i {
+  font-size: 13px;
+  color: #fff;
+}
+body.admin-dash .dash-tab[data-section="activities"] { background: #5bc85b; }
+body.admin-dash .dash-tab[data-section="adoptions"] { background: #6d8cf0; }
+body.admin-dash .dash-tab[data-section="payments"] { background: #ffad5c; }
+
+/* Bahagyang liwanag kapag tinutukan, walang paggalaw (iwas-kislap) */
+body.admin-dash .dash-tab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+body.admin-dash .dash-tab:not(.active):hover { transform: none; box-shadow: none; }
+body.admin-dash .dash-tab:not(.active):hover::after { opacity: .14; }
+
+/* Bukas na tab: mas madilim na kulay ng sariling tab */
+body.admin-dash .dash-tab.active { box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18); }
+body.admin-dash .dash-tab.active[data-section="activities"] { background: #1f7a2e; }
+body.admin-dash .dash-tab.active[data-section="adoptions"] { background: #1e2f8f; }
+body.admin-dash .dash-tab.active[data-section="payments"] { background: #f07c12; }
+body.admin-dash .dash-tab:focus-visible { outline: 3px solid #102a2a; outline-offset: -3px; }
+
+/* "Click a tab above" - info pill, kapareho ng paliwanag sa Staff */
+body.admin-dash .dash-empty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 16px 8px 10px;
+  border: 1px solid #c9e3e8;
+  border-radius: 999px;
+  background: #e6f3f5;
+  color: #1f3d44;
+  text-align: left;
+}
+body.admin-dash .dash-empty i {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #1f3d44;
+}
+body.admin-dash .dash-empty p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f3d44;
+}
+
+/* Laman ng bukas na tab */
+body.admin-dash .dash-section {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+body.admin-dash .panel-header h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #102a2a;
+}
+body.admin-dash .close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 22px;
+  line-height: 1;
+  color: #6b7280;
+}
+body.admin-dash .close-btn:hover {
+  background: #f3f4f6;
+  color: #102a2a;
+}
+
+/* Table: maliwanag, kapareho ng mga listahan sa Staff */
+body.admin-dash .table-container {
+  background: #fff;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  padding: 0;
+  color: #1f2937;
+  scrollbar-color: #c9c3b6 transparent;
+}
+body.admin-dash .table-container thead th { background: #f8f9fb; }
+body.admin-dash th {
+  padding: 12px 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  border-bottom: 1px solid #eef0f3;
+}
+body.admin-dash td {
+  padding: 12px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #f2f4f6;
+}
+body.admin-dash tbody tr:last-child td { border-bottom: none; }
+body.admin-dash tbody tr:hover td { background: #f7faf8; }
+body.admin-dash .activity-role,
+body.admin-dash .activities-empty { color: #6b7280; }
+
+/* Status: malalambot na pill */
+body.admin-dash .status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+body.admin-dash .status-badge.completed { background: #e6f4ea; color: #1e7e34; }
+body.admin-dash .status-badge.pending { background: #fef3c7; color: #92400e; }
+body.admin-dash .status-badge.failed { background: #fde8e8; color: #b42318; }
+body.admin-dash .status-badge.unpaid { background: #f1f1ef; color: #4b5563; }
+
+/* Mga button */
+body.admin-dash .show-more-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  background: #fff;
+  color: #1f7a2e;
+  border: 1.5px solid #cfe5d8;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: none;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+body.admin-dash .show-more-btn:hover {
+  background: #e8f3ed;
+  border-color: #b5d6c3;
+}
+
+/* Payment Monitoring: maliliit na tile */
+body.admin-dash .pay-stat {
+  background: #fafbfc;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+}
+body.admin-dash .pay-stat strong { color: #102a2a; font-weight: 800; }
+body.admin-dash .pay-stat-alert strong { color: #c5221f; }
+
+/* Chart controls */
+body.admin-dash .chart-panel { background: #fff; }
+body.admin-dash .toggle-btn {
+  border-radius: 8px;
+  box-shadow: none;
+  font-weight: 700;
+}
+body.admin-dash .toggle-btn:hover { transform: none; }
+body.admin-dash .toggle-btn.active-orange { background: #1f7a2e; box-shadow: none; }
+body.admin-dash .toggle-btn.green { background: #fff; color: #1f7a2e; border: 1px solid #cfe5d8; opacity: 1 !important; }
+body.admin-dash .chart-title h3,
+body.admin-dash .chart-summary { border-color: #eef0f3; }
+body.admin-dash .chart-wrapper { background: #fff; border: none; padding: 8px 0 0; }
+
+@media (max-width: 1100px) {
+  body.admin-dash .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  body.admin-dash .dash-tabbar { width: 100%; }
+  body.admin-dash .dash-tab { flex: 1 1 auto; justify-content: center; }
+  body.admin-dash .stat-card .stat-icon { width: 44px; height: 44px; border-radius: 13px; font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.admin-dash .dash-tab,
+  body.admin-dash .dash-tab::after { transition: none; }
+}
+
+/* ----- Successful Adoptions chart (toolbar, buod/legend, tooltip) ----- */
+body.admin-dash .chart-panel { gap: 0; }
+body.admin-dash .chart-sub {
+  margin-top: 3px;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+body.admin-dash .chart-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 4px 0 14px;
+  padding: 12px 14px;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  background: #fafbfc;
+}
+body.admin-dash .chart-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+/* Year / Month: segmented control */
+body.admin-dash .chart-seg {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 10px;
+  background: #e9eeeb;
+}
+body.admin-dash .chart-seg-btn {
+  height: 32px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #4b5563;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+body.admin-dash .chart-seg-btn:hover:not(.active) { color: #1b4332; }
+body.admin-dash .chart-seg-btn.active {
+  background: #fff;
+  color: #1b4332;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.12);
+}
+body.admin-dash .chart-seg-btn:focus-visible,
+body.admin-dash .chart-back:focus-visible { outline: 2px solid #2d6a4f; outline-offset: 2px; }
+
+body.admin-dash .chart-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #cfe5d8;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f7a2e;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+body.admin-dash .chart-back[hidden] { display: none; }
+body.admin-dash .chart-back:hover { background: #e8f3ed; }
+body.admin-dash .chart-back i { font-size: 11px; }
+
+body.admin-dash .chart-scope {
+  font-size: 15px;
+  font-weight: 800;
+  color: #102a2a;
+  white-space: nowrap;
+}
+
+/* Buod sa kanan - legend na rin ng chart */
+body.admin-dash .chart-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+body.admin-dash .chart-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 150px;
+  padding: 8px 14px 8px 12px;
+  border: 1px solid #eef0f3;
+  border-radius: 10px;
+  background: #fff;
+}
+body.admin-dash .chart-stat strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #102a2a;
+}
+body.admin-dash .chart-stat small {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+body.admin-dash .chart-swatch {
+  flex-shrink: 0;
+  display: inline-block;
+}
+body.admin-dash .chart-swatch.is-bar {
+  width: 12px;
+  height: 28px;
+  border-radius: 4px;
+  background: linear-gradient(0deg, #1b4332, #52b788);
+}
+body.admin-dash .chart-swatch.is-line {
+  position: relative;
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  background: #e0883a;
+}
+body.admin-dash .chart-swatch.is-line::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #e0883a;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+
+/* Chart area */
+body.admin-dash .chart-wrapper {
+  position: relative;
+  min-height: 300px;
+  padding: 4px 0 0;
+  background: #fff;
+  border: none;
+}
+body.admin-dash .chart-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9aa3ad;
+  pointer-events: none;
+}
+body.admin-dash .chart-empty[hidden] { display: none; }
+
+/* Tooltip: puting card na may malambot na anino */
+body.admin-dash .chart-tooltip {
+  min-width: 230px;
+  max-width: 290px;
+  padding: 12px 14px;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  background: #fff;
+  color: #1f2937;
+  box-shadow: 0 12px 28px rgba(16, 24, 40, 0.16);
+}
+body.admin-dash .chart-tooltip .ct-title {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #102a2a;
+}
+body.admin-dash .chart-tooltip .ct-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+body.admin-dash .chart-tooltip .ct-name { flex: 1; color: #4b5563; }
+body.admin-dash .chart-tooltip .ct-row strong { color: #102a2a; }
+body.admin-dash .chart-tooltip .ct-swatch { width: 10px; height: 10px; border-radius: 3px; }
+body.admin-dash .chart-tooltip .ct-swatch.is-line { height: 3px; border-radius: 2px; }
+body.admin-dash .chart-tooltip .ct-sub {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #eef0f3;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+body.admin-dash .chart-tooltip .ct-list {
+  color: #374151;
+  scrollbar-color: #c9cfd6 transparent;
+}
+body.admin-dash .chart-tooltip .ct-list li { border-top-color: #f2f4f6; }
+body.admin-dash .chart-tooltip .ct-hint {
+  margin-top: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #2d6a4f;
+}
+
+@media (max-width: 760px) {
+  body.admin-dash .chart-toolbar { align-items: stretch; }
+  body.admin-dash .chart-stats { width: 100%; }
+  body.admin-dash .chart-stat { flex: 1 1 140px; min-width: 0; }
+  body.admin-dash .chart-wrapper { min-height: 240px; }
+}
+
+/* Legend ng line chart: berde = adoptions (tuloy-tuloy), orange = applications (putol-putol) */
+body.admin-dash .chart-swatch.is-line {
+  width: 22px;
+  background: repeating-linear-gradient(90deg, #e0883a 0 5px, transparent 5px 8px);
+}
+body.admin-dash .chart-swatch.is-line.is-green { background: #2d6a4f; }
+body.admin-dash .chart-swatch.is-line.is-green::after { border-color: #2d6a4f; }
+
+/* ----- Magkatabi: mga tab (kaliwa) + Successful Adoptions chart (kanan) ----- */
+body.admin-dash .dash-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+body.admin-dash .dash-row > .panel { min-width: 0; }
+
+/* Chart container: kapareho ng itsura ng panel ng mga tab */
+body.admin-dash .dash-chart-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(10, 10, 10, 0.04);
+}
+body.admin-dash .dash-chart-card .panel-header { margin-bottom: 12px; }
+
+/* Mas makitid ang container, kaya ang buod ay nasa sariling linya sa ilalim */
+body.admin-dash .dash-chart-card .chart-toolbar {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 0;
+  padding: 10px;
+}
+body.admin-dash .dash-chart-card .chart-stats { flex-wrap: nowrap; }
+body.admin-dash .dash-chart-card .chart-stat {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 8px 10px;
+}
+body.admin-dash .dash-chart-card .chart-stat small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+body.admin-dash .dash-chart-card .chart-wrapper { min-height: 260px; }
+
+/* Maliit na laptop/tablet: nagpapatong na lang ang dalawa */
+@media (max-width: 1200px) {
+  body.admin-dash .dash-row { grid-template-columns: minmax(0, 1fr); }
+  body.admin-dash .dash-chart-card .chart-toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+/* ----- Kanang column: chart sa itaas, Payment Collection Today sa ilalim ----- */
+body.admin-dash .dash-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* Recent Activities (kaliwa): laging nakikita */
+body.admin-dash .dash-tabs-panel.activities-panel .panel-header { margin-bottom: 4px; }
+
+/* Payment Collection Today - kapareho ng Staff Dashboard */
+body.admin-dash .dash-pay-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(10, 10, 10, 0.04);
+}
+body.admin-dash .dash-pay-card .panel-header {
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+body.admin-dash .pay-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #cfe5d8;
+  border-radius: 8px;
+  color: #1f7a2e;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .2s ease;
+}
+body.admin-dash .pay-view-all:hover { background: #e8f3ed; }
+body.admin-dash .pay-view-all i { font-size: 11px; }
+
+body.admin-dash .pay-period-summary {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+body.admin-dash .pay-period-total {
+  font-size: 26px;
+  font-weight: 900;
+  color: #1f6b48;
+}
+body.admin-dash .pay-period-count {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+body.admin-dash .pay-adopter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+body.admin-dash .pay-avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(31, 107, 72, 0.12);
+  color: #1f6b48;
+  font-size: 13px;
+  font-weight: 800;
+}
+body.admin-dash .pay-amount {
+  font-weight: 800;
+  color: #1f6b48;
+  white-space: nowrap;
+}
+body.admin-dash .pay-ref {
+  display: inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 4px 8px;
+  border: 1px solid #e9ebe9;
+  border-radius: 8px;
+  background: #f4f5f4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .14s ease, border-color .14s ease;
+}
+body.admin-dash .pay-ref:hover { background: #eaf3ee; border-color: rgba(31, 107, 72, 0.3); }
+body.admin-dash .pay-ref.copied { background: rgba(31, 107, 72, 0.12); border-color: #1f6b48; color: #1f6b48; }
+body.admin-dash .pay-time {
+  font-size: 13px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+body.admin-dash .pay-today-table td,
+body.admin-dash .pay-today-table th { padding-left: 10px; padding-right: 10px; }
+
+body.admin-dash .pay-empty {
+  padding: 28px 16px;
+  border: 1px dashed #e3e7e4;
+  border-radius: 12px;
+  background: #fafbfa;
+  text-align: center;
+  color: #9aa6a3;
+}
+body.admin-dash .pay-empty i {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 26px;
+  opacity: .6;
+}
+body.admin-dash .pay-empty p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   Dashboard polish: napipindot na cards,
+   icon sa mga panel, at magkapantay na dalawang column
+   ============================================================ */
+
+/* ----- Stat cards: napipindot, may maliit na detalye ----- */
+body.admin-dash a.stat-card {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+body.admin-dash a.stat-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.08);
+  box-shadow: 0 16px 28px rgba(8, 28, 21, 0.28);
+}
+body.admin-dash a.stat-card:active { transform: translateY(-1px); }
+body.admin-dash a.stat-card:focus-visible {
+  outline: 3px solid rgba(82, 183, 136, 0.7);
+  outline-offset: 3px;
+}
+body.admin-dash a.stat-card .stat-icon { transition: transform .25s ease, background-color .25s ease; }
+body.admin-dash a.stat-card:hover .stat-icon {
+  transform: translateY(-2px) rotate(-4deg);
+  background: rgba(255, 255, 255, 0.2);
+}
+body.admin-dash .stat-info small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ----- Pamagat ng mga panel: icon tile + pamagat ----- */
+body.admin-dash .panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+body.admin-dash .panel-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #e8f3ed;
+  color: #2d6a4f;
+  font-size: 16px;
+}
+body.admin-dash .panel-icon.is-amber {
+  background: #fdf0e3;
+  color: #d9822b;
+}
+body.admin-dash .panel-header h3 { font-size: 17px; }
+
+/* ----- Magkapantay ang taas ng kaliwa at kanan ----- */
+body.admin-dash .dash-row { align-items: stretch; }
+body.admin-dash .dash-tabs-panel.activities-panel {
+  display: flex;
+  flex-direction: column;
+}
+body.admin-dash .activities-panel .activities-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+body.admin-dash .activities-panel .table-container {
+  flex: 0 0 auto;
+  max-height: none;
+}
+body.admin-dash .activities-panel .panel-footer { margin-top: auto; padding-top: 15px; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.admin-dash a.stat-card,
+  body.admin-dash a.stat-card .stat-icon { transition: none; }
+}
+
+/* Hindi lumalampas ang buod ng chart sa makitid na container */
+body.admin-dash .dash-chart-card .chart-stat > div { min-width: 0; }
+body.admin-dash .dash-chart-card .chart-stats { min-width: 0; }
+body.admin-dash .dash-chart-card .chart-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+}
+
+/* ============================================================
+   Header ng mga panel (Recent Activities, Successful Adoptions,
+   Payment Collection Today): gradient na icon tile, mas matapang na
+   pamagat, at guhit sa ilalim na may kulay na accent
+   ============================================================ */
+body.admin-dash .dash-row .panel-header {
+  position: relative;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+}
+body.admin-dash .dash-row .panel-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ph-accent, #2d6a4f) 0, var(--ph-accent, #2d6a4f) 48px, #eef0f3 48px, #eef0f3 100%);
+}
+body.admin-dash .dash-pay-card { --ph-accent: #d9822b; }
+
+body.admin-dash .dash-row .panel-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 17px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #52b788 100%);
+  box-shadow: 0 6px 14px rgba(27, 67, 50, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+body.admin-dash .dash-row .panel-icon.is-amber {
+  color: #fff;
+  background: linear-gradient(135deg, #b8621b 0%, #d9822b 55%, #f4a261 100%);
+  box-shadow: 0 6px 14px rgba(217, 130, 43, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+body.admin-dash .dash-row .panel-header h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  color: #0b2a1e;
+}
+body.admin-dash .dash-row .panel-header .chart-sub {
+  margin-top: 2px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #6b7280;
+}
+
+/* Maliit na pill sa kanan ng header (hal. "20 latest") */
+body.admin-dash .panel-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #d7ebdf;
+  border-radius: 999px;
+  background: #f1f8f4;
+  color: #1f6b48;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+body.admin-dash .panel-meta-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+}
+
+/* Ang "View all" ng Payment card - nakahanay sa gitna ng header */
+body.admin-dash .dash-pay-card .panel-header { align-items: center; }
+body.admin-dash .dash-row .dash-tabs-panel.activities-panel .panel-header { margin-bottom: 16px; }
+body.admin-dash .dash-pay-card .pay-period-summary { margin-top: 0; }

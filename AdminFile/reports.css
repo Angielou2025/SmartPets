@@ -1,0 +1,1117 @@
+:root {
+  --bg-main: #f5e7c6;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #1b4332;
+  --text-dark: #2d3748;
+  --primary-green: #2d6a4f;
+  --dark-green: #1b4332;
+  --accent-orange: #f4a261;
+  --card-dark: #121212;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--sidebar-border);
+  color: var(--text-dark);
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 15px;
+  border-top-right-radius: 40px;
+  /* Palaging kasintaas ng screen at nakadikit sa itaas, kaya pare-pareho ang
+     puwesto ng Logout kahit anong page ang buksan sa sidebar */
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.logo-circle {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  padding: 2px;
+  border: 1px solid green;
+  overflow: hidden;
+}
+
+.logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+.brand h2 {
+  font-size: 20px;
+  color: #000;
+}
+
+.brand h2 span {
+  color: var(--accent-orange);
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: var(--primary-green);
+  font-weight: 600;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.menu-item.active {
+  background-color: var(--bg-main);
+  color: #000;
+}
+
+.menu-item:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--primary-green);
+  font-weight: 600;
+  padding: 10px 18px;
+}
+
+.city-illustration {
+  line-height: 0;
+}
+
+.city-illustration img {
+  width: 100%;
+  height: auto;
+  max-height: 170px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* --- MAIN WRAPPER --- */
+.main-wrapper {
+  flex: 1;
+  min-width: 0; /* para hindi mapiga ang sidebar kapag malawak ang table */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+  border-top-left-radius: 30px;
+}
+
+/* --- TOP HEADER --- */
+.top-header {
+  background-color: #ffffff;
+  height: 65px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 2px solid rgba(0,0,0,0.05);
+  border-top-left-radius: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* ============================================================
+   Itsura na kinopya mula sa Reports ng Staff (StaffFile/reports.php,
+   StaffFile/_sidebar.php, staff_dashboard.css) - pero sa berdeng
+   kulay ng admin sa halip na asul.
+   ============================================================ */
+:root {
+  --rp-ink: #0b2a1e;
+  --rp-accent: #2d6a4f;
+  --rp-tint: #e8f3ed;
+  --rp-tint-border: #cfe5d8;
+  --rp-line: #eef0f3;
+}
+
+/* --- CONTENT CONTAINER --- */
+.content-container {
+  padding: 22px 28px 36px;
+  flex: 1;
+  max-width: 100%;
+}
+
+/* --- PAMAGAT NG PAGE: icon tile + pamagat + paliwanag --- */
+.sp-page-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4px 0 22px;
+  padding-bottom: 18px;
+  animation: spHeadIn .45s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* Manipis na guhit sa ilalim na may berdeng accent sa simula */
+.sp-page-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--rp-accent) 0, var(--rp-accent) 64px, #e4dccb 64px, #e4dccb 100%);
+}
+
+.sp-page-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  color: #fff;
+  background: linear-gradient(135deg, #081c15 0%, #1b4332 55%, #40916c 100%);
+  box-shadow: 0 10px 22px rgba(27, 67, 50, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.sp-page-icon svg,
+.sp-icon svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.sp-page-icon .ic-solid,
+.sp-icon .ic-solid {
+  fill: currentColor;
+  stroke: none;
+}
+
+.sp-page-icon .ic-fill { fill: rgba(255, 255, 255, 0.25); }
+.sp-icon .ic-fill { fill: rgba(255, 255, 255, 0.22); }
+
+.sp-page-text { min-width: 0; }
+
+.sp-page-head h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  line-height: 1.15;
+  color: var(--rp-ink);
+}
+
+.sp-page-head p {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.sp-page-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sp-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--rp-tint-border);
+  background: #fff;
+  color: var(--rp-accent);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+
+.sp-btn-outline:hover {
+  background: var(--rp-tint);
+  border-color: #b5d6c3;
+}
+
+.sp-btn-outline svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes spHeadIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- MGA STAT CARD: madilim (kaliwa) hanggang maliwanag (kanan) na berde --- */
+.sp-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.sp-card {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 20px;
+  border-radius: 14px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+.sp-card .stat-info { min-width: 0; }
+
+.sp-card h1 {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.sp-card p {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.sp-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.08);
+  box-shadow: 0 16px 28px rgba(8, 28, 21, 0.28);
+}
+
+.sp-card:active { transform: translateY(-1px); }
+
+.sp-card:focus-visible {
+  outline: 3px solid rgba(82, 183, 136, 0.7);
+  outline-offset: 3px;
+}
+
+.sp-c1 { background: linear-gradient(135deg, #081c15 0%, #12352a 100%); box-shadow: 0 8px 18px rgba(8, 28, 21, 0.30); }
+.sp-c2 { background: linear-gradient(135deg, #1b4332 0%, #245a43 100%); box-shadow: 0 8px 18px rgba(27, 67, 50, 0.28); }
+.sp-c3 { background: linear-gradient(135deg, #2d6a4f 0%, #357a5b 100%); box-shadow: 0 8px 18px rgba(45, 106, 79, 0.28); }
+.sp-c4 { background: linear-gradient(135deg, #40916c 0%, #52a37d 100%); box-shadow: 0 8px 18px rgba(64, 145, 108, 0.30); }
+
+.sp-icon {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 14px rgba(0, 0, 0, 0.12);
+  color: #fff;
+  transition: transform .25s ease, background-color .25s ease;
+}
+
+.sp-card:hover .sp-icon {
+  transform: translateY(-2px) rotate(-4deg);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* --- REPORT PANEL: mga box sa kaliwa, report sa kanan --- */
+.rpt-panel {
+  background: #ffffff;
+  border: 1px solid var(--rp-line);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 22px rgba(8, 28, 21, 0.05);
+  scroll-margin-top: 80px;
+}
+
+.staff-tabs-vertical {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.staff-tabbar {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.staff-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1.5px solid #e6ebe8;
+  border-radius: 14px;
+  color: var(--rp-ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.04);
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease, box-shadow .2s ease;
+}
+
+.staff-tab:hover {
+  border-color: var(--rp-tint-border);
+  transform: translateX(3px);
+  box-shadow: 0 10px 22px rgba(16, 24, 40, 0.08);
+}
+
+.staff-tab-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--rp-tint);
+  color: var(--rp-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease;
+}
+
+.staff-tab-icon svg,
+.staff-tab-empty-icon svg,
+.rp-icon svg,
+.rp-mini-icon svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.staff-tab-icon svg { width: 19px; height: 19px; stroke-width: 2.1; }
+
+.staff-tab-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.staff-tab.active {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  border-color: #1b4332;
+  color: #fff;
+  box-shadow: 0 4px 0 #081c15, 0 10px 22px rgba(27, 67, 50, 0.24);
+}
+
+.staff-tab.active .staff-tab-icon {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.staff-tab-empty,
+.staff-pane {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.staff-tab-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 240px;
+  padding: 28px 16px;
+  border: 2px dashed #dde8e1;
+  border-radius: 14px;
+  background: #fafcfb;
+  text-align: center;
+}
+
+.staff-tab-empty-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rp-tint);
+  color: var(--rp-accent);
+}
+
+.staff-tab-empty-icon svg { width: 22px; height: 22px; stroke-width: 2.2; }
+
+.staff-tab-empty p {
+  margin: 0;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.staff-pane { animation: staffPaneIn .25s ease; }
+
+/* Mas malakas ang display rules sa itaas kaysa sa [hidden], kaya tahasan */
+.staff-pane[hidden],
+.staff-tab-empty[hidden] {
+  display: none;
+}
+
+@keyframes staffPaneIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- HEADER NG BAWAT REPORT --- */
+.rp-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.rp-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rp-tint);
+  color: var(--rp-accent);
+}
+
+.rp-icon svg { width: 20px; height: 20px; stroke-width: 2.1; }
+
+.rp-head h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--rp-ink);
+}
+
+.rp-caption {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.rp-subhead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 24px 0 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rp-line);
+}
+
+.rp-subhead h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--rp-ink);
+}
+
+.empty-note {
+  color: #9ca3af;
+  font-size: 13px;
+  padding: 10px 0;
+}
+
+/* --- DONUT CHARTS --- */
+.rp-pies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.rp-pie-card {
+  margin: 0;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--rp-line);
+  background: #fcfdfc;
+  min-width: 0;
+}
+
+.rp-pie-card figcaption {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--rp-ink);
+  margin-bottom: 10px;
+}
+
+.rp-pie-body {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.rp-pie-canvas {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.rp-pie-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.rp-pie-center strong {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--rp-ink);
+  line-height: 1;
+}
+
+.rp-pie-center span {
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+.rp-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rp-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--rp-line);
+  font-size: 13.5px;
+}
+
+.rp-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.rp-legend-label {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  color: #374151;
+}
+
+.rp-legend strong {
+  color: var(--rp-ink);
+  font-size: 14px;
+}
+
+.rp-legend-pct {
+  min-width: 40px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+/* --- MEDICAL & INTAKE: maliliit na tile --- */
+.rp-mini-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rp-mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--rp-line);
+  background: #fafbfc;
+}
+
+.rp-mini-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rp-mini-icon svg { width: 20px; height: 20px; stroke-width: 2; }
+
+.rp-mini.is-red .rp-mini-icon { background: #fdecea; color: #c5221f; }
+.rp-mini.is-green .rp-mini-icon { background: var(--rp-tint); color: var(--rp-accent); }
+
+.rp-mini strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--rp-ink);
+  line-height: 1.1;
+}
+
+.rp-mini span {
+  font-size: 12.5px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* --- TREND CHART --- */
+.chart-wrapper {
+  position: relative;
+  height: 300px;
+  padding: 10px 6px 0;
+}
+
+/* --- TABLE --- */
+.rp-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+}
+
+.rpt-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.rpt-table th {
+  background: #f8faf9;
+  color: #6b7280;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rp-line);
+}
+
+.rpt-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f2f4f6;
+  font-size: 14px;
+}
+
+.rpt-table tbody tr:last-child td { border-bottom: none; }
+.rpt-table tbody tr:hover td { background: #f6faf8; }
+
+.rp-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rp-person strong { color: var(--rp-ink); }
+
+.rp-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, #1b4332, #40916c);
+}
+
+.rp-pet { font-weight: 700; color: #1f2937; }
+.rp-date { color: #4b5563; font-size: 13px; white-space: nowrap; }
+.rp-empty { text-align: center; padding: 40px 10px !important; color: #9aa3ad; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1280px) {
+  .rp-pies { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1100px) {
+  .sp-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .staff-tabs-vertical { grid-template-columns: minmax(0, 1fr); }
+  .staff-tab-empty,
+  .staff-pane {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .staff-tab:hover { transform: none; }
+}
+
+@media (max-width: 700px) {
+  .sp-page-head { flex-wrap: wrap; }
+  .sp-page-actions { margin-left: 0; }
+}
+
+@media (max-width: 600px) {
+  .sp-page-icon { width: 46px; height: 46px; border-radius: 13px; }
+  .sp-page-icon svg { width: 23px; height: 23px; }
+  .sp-page-head h1 { font-size: 23px; }
+  .sp-icon { width: 44px; height: 44px; border-radius: 13px; }
+  .sp-icon svg { width: 23px; height: 23px; }
+  .rp-mini-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-page-head,
+  .staff-pane { animation: none; }
+  .sp-card,
+  .sp-icon { transition: none; }
+}
+
+/* --- PRINT: report lang, walang sidebar/header/chat --- */
+@media print {
+  body,
+  .main-wrapper { background: #fff !important; }
+
+  .sidebar,
+  .top-header,
+  .sp-page-actions,
+  #spChatToggle,
+  #spMobileBar,
+  [id*="spChat"] {
+    display: none !important;
+  }
+
+  .app-container { display: block; }
+  .content-container { padding: 0; }
+  .sp-card,
+  .rpt-panel { box-shadow: none; break-inside: avoid; }
+}
+
+/* ============================================================
+   Print Report modal (Weekly / Monthly / Yearly)
+   ============================================================ */
+body.modal-open { overflow: hidden; }
+
+.pr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.pr-modal[hidden] { display: none; }
+
+.pr-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 28, 21, 0.55);
+  animation: prFade .2s ease;
+}
+
+.pr-dialog {
+  position: relative;
+  width: min(460px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 22px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  animation: prPop .25s cubic-bezier(.22, 1, .36, 1);
+}
+
+.pr-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rp-line);
+}
+.pr-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #52b788 100%);
+  box-shadow: 0 6px 14px rgba(27, 67, 50, 0.22);
+}
+.pr-icon svg,
+.pr-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pr-head h3 { font-size: 17px; font-weight: 800; color: var(--rp-ink); }
+.pr-head p { margin-top: 2px; font-size: 12.5px; color: #6b7280; }
+.pr-close {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pr-close:hover { background: #f3f4f6; color: var(--rp-ink); }
+
+.pr-field { margin-bottom: 14px; }
+.pr-field[hidden] { display: none; }
+.pr-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 10px;
+}
+.pr-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+.pr-field select,
+.pr-field input[type="date"] {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1.5px solid #e2e6e4;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--rp-ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+.pr-field select:focus,
+.pr-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+}
+.pr-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Weekly / Monthly / Yearly: segmented */
+.pr-seg {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 4px;
+  border-radius: 12px;
+  background: #eef2ef;
+}
+.pr-seg label { position: relative; cursor: pointer; }
+.pr-seg input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.pr-seg span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4b5563;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.pr-seg label:hover span { color: var(--rp-accent); }
+.pr-seg input:checked + span {
+  background: #fff;
+  color: #1b4332;
+  box-shadow: 0 1px 4px rgba(16, 24, 40, 0.14);
+}
+.pr-seg input:focus-visible + span { outline: 2px solid var(--rp-accent); outline-offset: 1px; }
+
+/* Listahan ng kasama sa report */
+.pr-includes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin: 4px 0 18px;
+  padding: 12px 14px;
+  list-style: none;
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+  background: #fafcfb;
+}
+.pr-includes li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 12.5px;
+  color: #374151;
+}
+.pr-includes li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 4px;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid var(--rp-accent);
+  border-bottom: 2px solid var(--rp-accent);
+  transform: rotate(-45deg);
+}
+
+.pr-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.pr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px;
+  border: 1.5px solid #e2e6e4;
+  border-radius: 10px;
+  background: #fff;
+  color: #374151;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s ease, filter .2s ease;
+}
+.pr-btn:hover { background: #f3f4f6; }
+.pr-btn.primary {
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  box-shadow: 0 6px 14px rgba(27, 67, 50, 0.25);
+}
+.pr-btn.primary:hover { filter: brightness(1.08); background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%); }
+.pr-btn svg { width: 17px; height: 17px; }
+
+@keyframes prFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes prPop { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 480px) {
+  .pr-row,
+  .pr-includes { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-backdrop,
+  .pr-dialog { animation: none; }
+}

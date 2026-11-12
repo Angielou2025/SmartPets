@@ -1,0 +1,934 @@
+:root {
+  --bg-main: #f5e7c6;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #1b4332;
+  --text-dark: #2d3748;
+  --primary-green: #2d6a4f;
+  --dark-green: #1b4332;
+  --accent-orange: #f4a261;
+  --card-dark: #121212;
+  --badge-completed: #e76f51;
+  --badge-pending: #e9c46a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--sidebar-border);
+  color: var(--text-dark);
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: var(--sidebar-bg);
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 15px;
+  border-top-right-radius: 40px;
+  /* Palaging kasintaas ng screen at nakadikit sa itaas, kaya pare-pareho ang
+     puwesto ng Logout kahit anong page ang buksan sa sidebar */
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.logo-circle {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  padding: 2px;
+  border: 1px solid green;
+  overflow: hidden;
+}
+
+.logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+.brand h2 {
+  font-size: 20px;
+  color: #000;
+}
+
+.brand h2 span {
+  color: var(--accent-orange);
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: var(--primary-green);
+  font-weight: 600;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.menu-item.active {
+  background-color: var(--bg-main);
+  color: #000;
+}
+
+.menu-item:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--primary-green);
+  font-weight: 600;
+  padding: 10px 18px;
+}
+
+.city-illustration {
+  line-height: 0;
+}
+
+.city-illustration img {
+  width: 100%;
+  height: auto;
+  max-height: 170px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* --- MAIN WRAPPER --- */
+.main-wrapper {
+  flex: 1;
+  min-width: 0; /* para hindi mapiga ang sidebar kapag malawak ang table */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+  border-top-left-radius: 30px;
+}
+
+/* Page Transition Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-container {
+  padding: 30px;
+  flex: 1;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* --- TOP HEADER --- */
+.top-header {
+  background-color: #ffffff;
+  height: 65px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 2px solid rgba(0,0,0,0.05);
+  border-top-left-radius: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* --- CONTENT CONTAINER --- */
+.content-container {
+  padding: 30px;
+  flex: 1;
+}
+
+.card-panel {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-header h2 {
+  font-size: 24px;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.btn-add-staff {
+  background-color: var(--primary-green);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-add-staff:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+/* --- SEARCH BOX --- */
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 15px;
+  width: 320px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: var(--primary-green);
+}
+
+.search-box i {
+  color: var(--accent-orange);
+  margin-right: 10px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+
+/* --- TABLE --- */
+.table-wrapper {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  /* Nagsi-scroll ang table sa loob (pahalang at pababa) imbes na humaba o mapiga ang layout */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  max-height: calc(100vh - 330px);
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+}
+
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.staff-table thead tr {
+  background-color: var(--primary-green);
+  color: #ffffff;
+}
+
+.staff-table th {
+  padding: 15px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.staff-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+  color: var(--text-dark);
+}
+
+.staff-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.user-photo {
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.email-link {
+  color: var(--primary-green);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}
+
+.action-cell {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* --- BADGES --- */
+.badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-active {
+  background-color: var(--accent-orange);
+  color: #fff;
+}
+
+.badge-leave {
+  background-color: #95a5a6;
+  color: #fff;
+}
+
+/* --- ACTION BUTTONS --- */
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.btn-icon.edit { color: var(--primary-green); }
+.btn-icon.delete { color: #e74c3c; }
+
+/* Hindi na pinupuno ng bakanteng puting kahon ang ilalim ng table - sumusunod
+   na ang taas ng card sa dami ng staff */
+.table-empty-space {
+  display: none;
+}
+
+/* --- MODAL --- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--primary-green);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.btn-submit {
+  background-color: var(--primary-green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+  background-color: var(--dark-green);
+}
+
+/* --- ADOPTER PICKER (Add New Staff modal) --- */
+.adopter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.adopter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+
+.adopter-row-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adopter-row .user-photo {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
+
+.adopter-email {
+  color: #777;
+  font-size: 13px;
+}
+/* ============================================
+   Role change request badges - Manage Staff
+   Hindi na direktang nagpapalit ng role ang admin dito. Hiling muna ang
+   ipinapadala, at ang may-ari ng account ang sumasagot sa pop-up sa panig niya.
+   ============================================ */
+.role-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #fff4d6;
+  color: #8a6100;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.role-cancel {
+  padding: 5px 11px;
+  border: 1px solid #d5d9e0;
+  border-radius: 7px;
+  background: #fff;
+  color: #6b7280;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.role-cancel:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* ============================================================
+   Bagong itsura ng Manage Staff - kapareho ng Dashboard at Reports
+   ============================================================ */
+
+/* ----- Summary cards: madilim (kaliwa) hanggang maliwanag (kanan) ----- */
+.ms-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.ms-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 112px;
+  padding: 18px 18px 18px 20px;
+  border-radius: 14px;
+  color: #fff;
+  animation: fadeInUp 0.5s ease-out;
+}
+.ms-card > div:first-child { min-width: 0; }
+.ms-card strong { display: block; font-size: 32px; font-weight: 800; line-height: 1.1; }
+.ms-card span { display: block; margin-top: 4px; font-size: 14px; font-weight: 600; }
+.ms-card small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ms-c1 { background: linear-gradient(135deg, #081c15 0%, #12352a 100%); box-shadow: 0 8px 18px rgba(8, 28, 21, 0.28); }
+.ms-c2 { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%); box-shadow: 0 8px 18px rgba(27, 67, 50, 0.26); }
+.ms-c3 { background: linear-gradient(135deg, #40916c 0%, #52a37d 100%); box-shadow: 0 8px 18px rgba(64, 145, 108, 0.28); }
+.ms-card-icon {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 14px rgba(0, 0, 0, 0.12);
+  font-size: 20px;
+}
+
+/* ----- Card at header ----- */
+.card-panel {
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 12px 30px rgba(10, 10, 10, 0.04);
+}
+.card-header {
+  position: relative;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+}
+.card-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #2d6a4f 0, #2d6a4f 48px, #eef0f3 48px, #eef0f3 100%);
+}
+.ms-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.ms-title-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 17px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #52b788 100%);
+  box-shadow: 0 6px 14px rgba(27, 67, 50, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.card-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: #0b2a1e;
+}
+.ms-title p {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+.btn-add-staff {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  box-shadow: 0 6px 14px rgba(27, 67, 50, 0.22);
+}
+.btn-add-staff:hover {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  filter: brightness(1.1);
+}
+.btn-add-staff:focus-visible { outline: 3px solid rgba(82, 183, 136, 0.5); outline-offset: 2px; }
+
+/* ----- Search + bilang ----- */
+.ms-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.ms-toolbar .search-box {
+  margin-bottom: 0;
+  height: 40px;
+  padding: 0 14px;
+  border: 1.5px solid #e2e6e4;
+  border-radius: 10px;
+}
+.ms-toolbar .search-box:focus-within {
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+}
+.ms-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* ----- Table: maliwanag na header, kapareho ng Dashboard ----- */
+.table-wrapper {
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+}
+.staff-table thead tr { background: #f8f9fb; color: #6b7280; }
+.staff-table th {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef0f3;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .6px;
+}
+.staff-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f2f4f6;
+}
+.staff-table tbody tr:last-child td { border-bottom: none; }
+.staff-table tbody tr:hover { background: #f7faf8; }
+.staff-table .th-actions,
+.staff-table .td-actions { text-align: right; }
+.staff-table .td-actions .action-cell { justify-content: flex-end; gap: 10px; }
+
+/* Staff: avatar + pangalan + email */
+.ms-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.ms-person .user-photo {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: rgba(31, 107, 72, 0.12);
+  color: #1f6b48;
+  font-size: 15px;
+  font-weight: 800;
+}
+.ms-person .user-photo img { width: 100%; height: 100%; object-fit: cover; }
+.ms-person-text { display: flex; flex-direction: column; min-width: 0; }
+.ms-person-text strong { font-size: 14.5px; color: #0b2a1e; }
+.ms-person-text .email-link { font-size: 13px; font-weight: 500; color: #6b7280; }
+.ms-person-text .email-link:hover { color: #2d6a4f; }
+.ms-date { color: #4b5563; font-size: 14px; white-space: nowrap; }
+
+/* Status: malambot na pill na may tuldok */
+.ms-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ms-status .ms-dot { width: 7px; height: 7px; border-radius: 50%; }
+.ms-status.is-active { background: #e6f4ea; color: #1e7e34; }
+.ms-status.is-active .ms-dot { background: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18); }
+.ms-status.is-leave { background: #f1f1ef; color: #4b5563; }
+.ms-status.is-leave .ms-dot { background: #9ca3af; }
+
+/* "Move to Adopter": malinaw na button na may text */
+.ms-btn-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1.5px solid #f5c2c2;
+  border-radius: 9px;
+  background: #fff;
+  color: #b42318;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.ms-btn-remove:hover { background: #fdecea; border-color: #ef9a9a; }
+.ms-btn-remove:focus-visible { outline: 3px solid rgba(180, 35, 24, 0.25); outline-offset: 2px; }
+.role-cancel { height: 34px; border-radius: 9px; font-weight: 700; }
+
+/* Walang staff pa */
+.ms-empty {
+  padding: 40px 16px !important;
+  text-align: center;
+  color: #6b7280;
+}
+.ms-empty i { font-size: 28px; color: #9ca3af; margin-bottom: 8px; }
+.ms-empty p { font-weight: 700; color: #374151; }
+.ms-empty span { font-size: 13px; }
+
+@media (max-width: 900px) {
+  .ms-cards { grid-template-columns: 1fr; }
+  .card-header { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms-card { animation: none; }
+}
+
+/* ----- Add New Staff modal: kapareho ng Print Report modal ----- */
+body.modal-open { overflow: hidden; }
+.modal { background-color: rgba(8, 28, 21, 0.55); }
+.modal-content {
+  margin: 6vh auto;
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  animation: msPop .25s cubic-bezier(.22, 1, .36, 1);
+}
+.modal-header {
+  gap: 12px;
+  padding: 20px 22px 16px;
+  background: #fff;
+  border-bottom: 1px solid #eef0f3;
+  border-radius: 16px 16px 0 0;
+}
+.modal-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0b2a1e;
+  font-size: 17px;
+  font-weight: 800;
+}
+.modal-header h3::before {
+  content: "\f234"; /* fa-user-plus */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 16px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 55%, #52b788 100%);
+  box-shadow: 0 6px 14px rgba(27, 67, 50, 0.22);
+}
+.modal-header .close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  color: #6b7280;
+  font-size: 24px;
+}
+.modal-header .close-btn:hover { background: #f3f4f6; color: #0b2a1e; }
+.modal-body { padding: 18px 22px 22px; }
+.modal-body > p { line-height: 1.5; }
+.modal-body .search-box {
+  height: 42px;
+  padding: 0 14px;
+  border: 1.5px solid #e2e6e4;
+  border-radius: 10px;
+}
+.modal-body .search-box:focus-within {
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+}
+
+/* Listahan ng adopter */
+.adopter-row {
+  padding: 10px 12px;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.adopter-row:hover { background: #f7faf8; border-color: #d7ebdf; }
+.adopter-row-info { min-width: 0; }
+.adopter-row-info strong { color: #0b2a1e; }
+.adopter-row .user-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(31, 107, 72, 0.12);
+}
+.adopter-email { color: #6b7280; }
+
+.ms-invite {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+}
+.ms-invite:hover { background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%); filter: brightness(1.1); }
+.ms-invite i { font-size: 12px; }
+
+@keyframes msPop {
+  from { opacity: 0; transform: translateY(10px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .modal-content { animation: none; } }
+
+/* ----- Export (Print / PDF / PNG / JPEG) ----- */
+.ms-head-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.ms-btn-outline {
+  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
+  border: 1.5px solid #cfe5d8; border-radius: 10px; background: #fff; color: #1f6b48;
+  font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap;
+  transition: background-color .2s ease;
+}
+.ms-btn-outline:hover { background: #e8f3ed; }
+.ms-btn-outline:disabled { opacity: .6; cursor: progress; }
+.ms-export { position: relative; }
+.ms-caret { font-size: 10px; transition: transform .2s ease; }
+.ms-export.open .ms-caret { transform: rotate(180deg); }
+.ms-export-menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 50; width: 250px; padding: 6px;
+  border: 1px solid #e3e8e5; border-radius: 12px; background: #fff; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+  opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+}
+.ms-export.open .ms-export-menu { opacity: 1; transform: none; pointer-events: auto; }
+.ms-export-hint { padding: 6px 10px 8px; margin-bottom: 4px; border-bottom: 1px solid #f1f1ef; font-size: 11.5px; font-weight: 700; color: #6b7280; }
+.ms-export-menu button {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 10px; border: none; border-radius: 9px;
+  background: none; font-family: inherit; text-align: left; cursor: pointer;
+}
+.ms-export-menu button:hover, .ms-export-menu button:focus-visible { background: #f1f8f4; outline: none; }
+.ms-export-menu button i { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 9px; font-size: 14px; }
+.ms-export-menu [data-export="print"] i { background: #e8f3ed; color: #1f6b48; }
+.ms-export-menu [data-export="pdf"] i { background: #fdecea; color: #b42318; }
+.ms-export-menu [data-export="png"] i { background: #e8effc; color: #1e40af; }
+.ms-export-menu [data-export="jpeg"] i { background: #fdf0e3; color: #b8621b; }
+.ms-export-menu b { display: block; font-size: 13.5px; color: #111827; }
+.ms-export-menu small { display: block; font-size: 11.5px; color: #6b7280; }
+@media (max-width: 700px) { .ms-head-actions { width: 100%; justify-content: flex-end; } }
